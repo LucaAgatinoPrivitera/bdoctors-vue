@@ -9,14 +9,15 @@ import DoctorList from './components/DoctorList.vue';
   <div id="app">
     <!-- Header, Navbar, o altri componenti comuni possono andare qui -->
     <header>
-      <nav>
-        <ul>
-          <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/about">About</router-link></li>
-          <li><router-link to="/doctors">Doctors</router-link></li>
-          <li><router-link to="/contact">Contact</router-link></li>
-        </ul>
-      </nav>
+      <div class="container-fluid m-0 p-0">
+        <nav class="container d-flex justify-content-end">
+          <p class="ms-3 "><router-link class="text-decoration-none text-light " to="/">Home</router-link></p>
+          <p class="ms-3 "><router-link class="text-decoration-none text-light " to="/about">About</router-link></p>
+          <p class="ms-3 "><router-link class="text-decoration-none text-light " to="/doctors">Doctors</router-link></p>
+          <p class="ms-3 "><router-link class="text-decoration-none text-light " to="/contact">Contact</router-link></p>
+        </nav>
+      </div>
+
     </header>
 
     <!-- Questo è il punto in cui verranno visualizzati i componenti delle rotte -->

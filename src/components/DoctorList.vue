@@ -46,7 +46,7 @@ export default {
 
 
 <template>
-    <div class="container-fluid m-0 p-0">
+    <div class="container-fluid m-0 p-0 bg-white">
         <div>
             <h1 class="container text-success">Lista dei Dottori</h1>
         </div>
