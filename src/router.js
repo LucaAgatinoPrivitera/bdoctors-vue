@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import AppHome from './views/AppHome.vue';
-import AppAbout from './views/AppAbout.vue';
-import AppDoctors from './views/AppDoctors.vue';
-import AppContact from './views/AppContact.vue';
+import AppHome from './views/HomeView.vue';
+// import AppAbout from './views/AppAbout.vue';
+// import AppDoctors from './views/AppDoctors.vue';
+// import AppContact from './views/AppContact.vue';
+import DoctorList from './views/DoctorListView.vue';
 
 
 
@@ -15,7 +16,7 @@ const router = createRouter({
             name: 'home',
             component: AppHome
         },
-        {
+        /*{
             path: '/about',
             name: 'about',
             component: AppAbout
@@ -29,6 +30,11 @@ const router = createRouter({
             path: '/contact',
             name: 'contact',
             component: AppContact
+        },*/
+        {
+            path: '/doctors',
+            name: 'doctorsList',
+            component: DoctorList
         },
     ]
 });
