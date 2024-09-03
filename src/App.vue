@@ -9,12 +9,12 @@ import DoctorList from './components/DoctorList.vue';
   <div id="app">
     <!-- Header, Navbar, o altri componenti comuni possono andare qui -->
     <header>
-      <div class="container-fluid m-0 p-0">
+      <div class="container-fluid m-0 py-2">
         <nav class="container d-flex justify-content-end">
-          <p class="ms-3 "><router-link class="text-decoration-none text-light " to="/">Home</router-link></p>
-          <p class="ms-3 "><router-link class="text-decoration-none text-light " to="/about">About</router-link></p>
-          <p class="ms-3 "><router-link class="text-decoration-none text-light " to="/doctors">Doctors</router-link></p>
-          <p class="ms-3 "><router-link class="text-decoration-none text-light " to="/contact">Contact</router-link></p>
+          <p class="ms-3 mb-0 pb-0"><router-link class="text-decoration-none text-light " to="/">Home</router-link></p>
+          <p class="ms-3 mb-0 pb-0"><router-link class="text-decoration-none text-light " to="/about">About</router-link></p>
+          <p class="ms-3 mb-0 pb-0"><router-link class="text-decoration-none text-light " to="/doctors">Doctors</router-link></p>
+          <p class="ms-3 mb-0 pb0"><router-link class="text-decoration-none text-light " to="/contact">Contact</router-link></p>
         </nav>
       </div>
 
