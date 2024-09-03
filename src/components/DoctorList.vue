@@ -47,8 +47,8 @@ export default {
             <h1 class="container text-success">Lista dei Dottori</h1>
         </div>
 
-        <div v-if="loading">Caricamento...</div>
-        <div v-else-if="error">Errore: {{ error }}</div>
+        <div class="container" v-if="loading">Caricamento...</div>
+        <div class="container" v-else-if="error">Errore: {{ error }}</div>
         <div v-else class="container-fluid bg-white py-4">
 
             <div class="container">
