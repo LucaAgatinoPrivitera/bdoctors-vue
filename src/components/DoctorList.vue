@@ -9,7 +9,7 @@ export default {
             error: null,
             base_url: 'http://127.0.0.1:8000', // URL base per le API
             page: 1,
-            perPage: 30
+            perPage: 10
         };
     },
     async created() {
@@ -30,6 +30,10 @@ export default {
         },
         async loadMore() {
             this.page++;
+            await this.fetchDoctors();
+        },
+        async loadPrev() {
+            this.page--;
             await this.fetchDoctors();
         }
     },
@@ -74,6 +78,11 @@ export default {
             </div>
 
 
+            <div class="container">
+                <button @click="loadPrev" v-if="doctors.current_page > 1">Carica precedenti</button>
+                <!-- Pulsante per caricare la pagina successiva -->
+                <button @click="loadMore" v-if="doctors.current_page < doctors.last_page">Carica altro</button>
+            </div>
         </div>
 
 
@@ -94,7 +103,7 @@ export default {
         </ul> -->
 
         <!-- Gestione della paginazione -->
-        <button @click="loadMore" v-if="doctors.current_page < doctors.last_page">Carica altro</button>
+
     </div>
 </template>
 
