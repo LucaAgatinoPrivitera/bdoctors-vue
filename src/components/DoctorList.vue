@@ -32,21 +32,28 @@ export default {
             this.page++;
             await this.fetchDoctors();
         }
+    },
+    mounted() {
+        // titolo della scheda del browser
+        document.title = 'Lista dei Dottori';
     }
 };
 </script>
 
 
 <template>
-    <div>
-        <h1 class="text-success">Lista dei Dottori</h1>
+    <div class="container-fluid m-0 p-0">
+        <div>
+            <h1 class="container text-success">Lista dei Dottori</h1>
+        </div>
+
         <div v-if="loading">Caricamento...</div>
         <div v-else-if="error">Errore: {{ error }}</div>
-        <div v-else class="container-fluid bg-white">
+        <div v-else class="container-fluid bg-white py-4">
 
             <div class="container">
                 <div class="row text-dark">
-                    <div class="col-2 my-2" v-for="doctor in doctors.data" :key="doctor.id">
+                    <div class="col-2 py-2" v-for="doctor in doctors.data" :key="doctor.id">
                         <div class="border p-3 bg-light rounded">
                             <div class="d-flex justify-content-center mb-3">
                                 <img v-if="doctor.pic" :src="`${base_url}/storage/images/${doctor.pic}`"
