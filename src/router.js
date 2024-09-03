@@ -5,6 +5,7 @@ import AppHome from './views/HomeView.vue';
 // import AppDoctors from './views/AppDoctors.vue';
 // import AppContact from './views/AppContact.vue';
 import DoctorList from './views/DoctorListView.vue';
+import DoctorDetailView from './views/DoctorDetailView.vue';
 
 
 
@@ -35,6 +36,12 @@ const router = createRouter({
             path: '/doctors',
             name: 'doctorsList',
             component: DoctorList
+        },
+        {
+            path: '/doctors/:id',
+            name: 'doctorDetail',
+            component: DoctorDetailView,
+            props: true
         },
     ]
 });
