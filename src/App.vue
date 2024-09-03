@@ -6,27 +6,24 @@ import DoctorList from './components/DoctorList.vue';
 </script>
 
 <template>
-  <header>
-    <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
+  <div id="app">
+    <!-- Header, Navbar, o altri componenti comuni possono andare qui -->
+    <header>
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <ul>
+          <li><router-link to="/">Home</router-link></li>
+          <li><router-link to="/about">About</router-link></li>
+          <li><router-link to="/doctors">Doctors</router-link></li>
+          <li><router-link to="/contact">Contact</router-link></li>
+        </ul>
       </nav>
-    </div> -->
-  </header>
+    </header>
 
-  <body>
-    <DoctorList></DoctorList>
-  </body>
+    <!-- Questo è il punto in cui verranno visualizzati i componenti delle rotte -->
+    <router-view></router-view>
 
-  <!-- è stato installato con vue, poi lo usiamo -->
-  <!-- <RouterView /> -->
-
+    <!-- Footer o altri componenti comuni possono andare qui -->
+  </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
