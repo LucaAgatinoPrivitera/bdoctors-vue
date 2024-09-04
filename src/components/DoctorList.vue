@@ -4,8 +4,8 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            doctors: { data: [] }, // Inizializzato come oggetto con data come array
-            filteredDoctors: [], // Inizializzato come array vuoto
+            doctors: {},
+            filteredDoctors: [],
             loading: true,
             error: null,
             base_url: 'http://127.0.0.1:8000',
@@ -20,34 +20,25 @@ export default {
     methods: {
         async fetchDoctors() {
             try {
-                const response = await axios.get(`${this.base_url}/api/doctors`);
-                console.log('Response Data:', response.data); // Controlla se le specializzazioni sono presenti
+                const response = await axios.get(`${this.base_url}/api/doctors?page=${this.page}&perPage=${this.perPage}`);
                 this.doctors = response.data;
-                this.filteredDoctors = this.doctors;
+                this.filteredDoctors = this.doctors.data;
             } catch (error) {
                 console.error('Errore:', error);
                 this.error = 'Errore nel recupero dei dati.';
             } finally {
                 this.loading = false;
             }
-        }
-        ,
+        },
         filterDoctors(query) {
-            console.log('Search Query:', query);
-            console.log('Doctors before filtering:', this.doctors);
-
             if (query) {
-                this.filteredDoctors = this.doctors.filter(doctor => {
-                    console.log('Checking doctor:', doctor);
-                    return doctor.specializations && Array.isArray(doctor.specializations) &&
-                        doctor.specializations.some(specialization => {
-                            console.log('Checking specialization:', specialization);
-                            return specialization.name.toLowerCase().includes(query.toLowerCase());
-                        });
-                });
-                console.log('Filtered Doctors:', this.filteredDoctors);
+                this.filteredDoctors = this.doctors.data.filter(doctor =>
+                    doctor.specializations.some(specialization =>
+                        specialization.name.toLowerCase().includes(query.toLowerCase())
+                    )
+                );
             } else {
-                this.filteredDoctors = this.doctors;
+                this.filteredDoctors = this.doctors.data;
             }
         },
         async loadMore() {
