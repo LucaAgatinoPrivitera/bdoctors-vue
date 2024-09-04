@@ -88,7 +88,7 @@ export default {
             <div class="container">
                 <div class="row text-dark">
                     <div class="col-2 py-2" v-for="doctor in filteredDoctors" :key="doctor.id">
-                        <div class="border p-3 bg-light rounded">
+                        <div class="border p-3 bg-light rounded d-flex flex-column h-100 justify-content-between">
                             <div class="d-flex justify-content-center mb-3">
                                 <img v-if="doctor.pic" :src="`${base_url}/storage/images/${doctor.pic}`"
                                     alt="Immagine del dottore" class="img-fluid">

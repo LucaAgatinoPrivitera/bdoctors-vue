@@ -18,6 +18,7 @@ export default {
         async fetchDoctor() {
             try {
                 const response = await axios.get(`${this.base_url}/api/doctors/${this.id}`);
+                console.log('Risposta API:', response);
                 this.doctor = response.data;
             } catch (error) {
                 console.error('Errore:', error);
