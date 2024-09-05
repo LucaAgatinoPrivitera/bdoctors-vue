@@ -48,6 +48,6 @@ export default {
                 </li>
             </ul>
         </div>
-        <router-link class="text-decoration-none text-light m-0 py-2 btn btn-primary text-info" to="/doctors">Torna alla lista</router-link>
+        <router-link class="text-decoration-none text-light m-0 py-2 btn btn-primary text-info" to="/">Torna alla home</router-link>
     </div>
 </template>
