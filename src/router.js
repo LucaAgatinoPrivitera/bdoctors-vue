@@ -6,6 +6,8 @@ import AppHome from './views/HomeView.vue';
 // import AppContact from './views/AppContact.vue';
 import DoctorList from './views/DoctorListView.vue';
 import DoctorDetailView from './views/DoctorDetailView.vue';
+import Contact from './views/Contact.vue';
+import Review from './views/Review.vue';
 
 
 
@@ -43,6 +45,16 @@ const router = createRouter({
             component: DoctorDetailView,
             props: true
         },
+        {
+            path: '/contact/:doctorId',
+            name: 'contact',
+            component: Contact
+        },
+        {
+            path: '/review/:doctorId',
+            name: 'review',
+            component: Review
+        }
     ]
 });
 export { router };

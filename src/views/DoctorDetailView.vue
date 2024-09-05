@@ -47,7 +47,10 @@ export default {
                     {{ specialization.name }}
                 </li>
             </ul>
+            <router-link :to="{ name: 'contact', params: { doctorId: doctor.id } }" class="btn btn-primary">Contatta</router-link>
+            <router-link :to="{ name: 'review', params: { doctorId: doctor.id } }" class="btn btn-primary">Lascia una recensione</router-link>
         </div>
+    
         <router-link class="text-decoration-none text-light m-0 py-2 btn btn-primary text-info" to="/">Torna alla home</router-link>
     </div>
 </template>
