@@ -6,6 +6,9 @@ import AppHome from './views/HomeView.vue';
 // import AppContact from './views/AppContact.vue';
 import DoctorList from './views/DoctorListView.vue';
 import DoctorDetailView from './views/DoctorDetailView.vue';
+import Register from './views/Register.vue';
+import LogIn from './views/LogIn.vue';
+
 
 
 
@@ -17,6 +20,19 @@ const router = createRouter({
             name: 'home',
             component: AppHome
         },
+
+        {
+            path: '/register',
+            name: 'register',
+            component: Register,
+        },
+
+        {
+            path: '/login',
+            name: 'login',
+            component: LogIn,
+        },
+
         /*{
             path: '/about',
             name: 'about',
