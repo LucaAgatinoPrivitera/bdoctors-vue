@@ -26,6 +26,7 @@
           await schema.validate(this.$data, { abortEarly: false });
           // Esegui la logica di registrazione (chiamata API, ecc.)
           alert("Registrazione completata con successo!");
+          this.$router.push({ name: 'home' }); // Assicurati che 'home' corrisponda al nome della rotta per la home
         } catch (error) {
           // Gestisci gli errori
           if (error.inner) {
@@ -41,6 +42,7 @@
           email: yup
             .string()
             .email("L'email non è valida")
+            .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "L'email deve contenere un punto dopo la @")
             .required("L'email è obbligatoria"),
           password: yup
             .string()
