@@ -26,6 +26,7 @@
           await schema.validate(this.$data, { abortEarly: false });
           // Esegui la logica di registrazione (chiamata API, ecc.)
           alert("Registrazione completata con successo!");
+          this.$router.push({ name: 'home' }); // Assicurati che 'home' corrisponda al nome della rotta per la home
         } catch (error) {
           // Gestisci gli errori
           if (error.inner) {
