@@ -63,7 +63,7 @@ export default {
 .contact-container {
   background: url('https://www.sanitysystem.it/imgs/36060_img-articolo-25-luglio-2022-01.jpg') no-repeat center center;
   background-size: cover;
-  min-height: 100vh;
+  min-height: 94vh;
   display: flex;
   justify-content: center;
   align-items: center;
