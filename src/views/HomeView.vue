@@ -165,7 +165,8 @@ export default {
             }
         },
         goToDoctorDetail(doctor) {
-            this.$router.push({ name: 'doctorDetail', params: { slug: doctor.slug } });
+            console.log(doctor)
+            this.$router.push({ name: 'doctorDetail', params: { slug: doctor } });
         },
         // lo script serve perché ogni utente ha la foto, anche se poi non esiste come file
         handleImageError(event) {
