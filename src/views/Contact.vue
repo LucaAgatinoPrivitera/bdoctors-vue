@@ -1,7 +1,7 @@
 <template>
     <div class="container">
-        <h1>Contatta il Medico</h1>
-        <form @submit.prevent="sendMessage">
+        <h1>Invia un Messaggio</h1>
+        <form @submit.prevent="submitMessage">
             <div class="form-group">
                 <label for="name">Nome</label>
                 <input type="text" id="name" v-model="form.name" class="form-control" required>
@@ -28,19 +28,28 @@ export default {
             form: {
                 name: '',
                 email: '',
-                message: ''
+                message: '',
+                doctor_id: '', // Associa l'ID del dottore dal route params
             }
         };
     },
     methods: {
-        async sendMessage() {
+        async submitMessage() {
+            // Associa l'ID del dottore dal route params
+            this.form.doctor_id = this.$route.params.doctorId;
+            console.log(this.form); // Verifica i dati inviati
             try {
-                await axios.post(`/api/doctors/${this.$route.params.doctorId}/contact`, this.form);
+                await axios.post(`http://localhost:8000/api/messages`, this.form);
                 alert('Messaggio inviato con successo!');
                 this.$router.push('/');
             } catch (error) {
-                console.error('Errore nell\'invio del messaggio:', error);
-                alert('Errore nell\'invio del messaggio.');
+                if (error.response) {
+                    console.error('Errore nella risposta:', error.response.data);
+                    alert(`Errore: ${JSON.stringify(error.response.data.errors)}`);
+                } else {
+                    console.error('Errore:', error);
+                    alert('Errore sconosciuto.');
+                }
             }
         }
     }
