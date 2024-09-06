@@ -2,7 +2,7 @@
     <div class="contact-container">
     <div class="contact-content">
       <h1>Contatta il Medico</h1>
-      <form @submit.prevent="submitForm" class="contact-form">
+      <form @submit.prevent="sendMessage" class="contact-form">
         <div class="form-group">
           <label for="name">Nome</label>
           <input type="text" id="name" v-model="form.name" required />
@@ -18,7 +18,6 @@
         <input type="hidden" v-model="form.doctor_id" />
         <button type="submit">Invia Messaggio</button>
       </form>
-      <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
     </div>
   </div>
 </template>
@@ -33,19 +32,16 @@ export default {
                 name: '',
                 email: '',
                 message: '',
-                doctor_id: '', // Associa l'ID del dottore dal route params
+                doctor_id: '', // Inizializza anche il doctor_id
             }
         };
     },
     methods: {
-        async submitMessage() {
-            // Associa l'ID del dottore dal route params
+        async sendMessage() {
             this.form.doctor_id = this.$route.params.doctorId;
-            console.log(this.form); // Verifica i dati inviati
             try {
                 await axios.post(`http://localhost:8000/api/messages`, this.form);
                 alert('Messaggio inviato con successo!');
-                this.$router.push('/');
             } catch (error) {
                 if (error.response) {
                     console.error('Errore nella risposta:', error.response.data);
@@ -63,7 +59,7 @@ export default {
 .contact-container {
   background: url('https://www.sanitysystem.it/imgs/36060_img-articolo-25-luglio-2022-01.jpg') no-repeat center center;
   background-size: cover;
-  min-height: 94vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
