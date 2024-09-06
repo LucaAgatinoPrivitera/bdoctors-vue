@@ -83,7 +83,10 @@ export default {
         },
         goToDoctorDetail(id) {
             this.$router.push({ name: 'doctorDetail', params: { id } });
-        }
+        },
+        handleImageError(event) {
+            event.target.src = 'https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg';
+        },
     },
     mounted() {
         document.title = 'Lista dei Dottori';
@@ -133,7 +136,10 @@ export default {
                         <div class="border p-3 bg-light rounded d-flex flex-column h-100 justify-content-between">
                             <div class="d-flex justify-content-center mb-3">
                                 <img v-if="doctor.pic" :src="`${base_url}/storage/images/${doctor.pic}`"
-                                    alt="Immagine del dottore" class="img-fluid">
+                                    alt="Immagine del dottore" class="img-fluid" @error="handleImageError" />
+                                <img v-else
+                                    src="https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg"
+                                    alt="Immagine del dottore" class="img-fluid" />
                             </div>
                             <h2>{{ doctor.surname }}</h2>
                             <p>Indirizzo: {{ doctor.address }}</p>
