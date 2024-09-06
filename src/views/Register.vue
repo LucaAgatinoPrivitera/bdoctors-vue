@@ -41,6 +41,7 @@
           email: yup
             .string()
             .email("L'email non è valida")
+            .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "L'email deve contenere un punto dopo la chiocciola")
             .required("L'email è obbligatoria"),
           password: yup
             .string()
