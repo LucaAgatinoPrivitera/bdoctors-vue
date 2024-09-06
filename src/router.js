@@ -10,6 +10,7 @@ import Contact from './views/Contact.vue';
 import Review from './views/Review.vue';
 import Register from './views/Register.vue';
 import LogIn from './views/LogIn.vue';
+import FilteredDoctor from './views/FilteredDoctor.vue';
 
 
 
@@ -70,6 +71,11 @@ const router = createRouter({
             path: '/review/:doctorId',
             name: 'review',
             component: Review
+        },
+        {
+            path: '/search',
+            name: 'search',
+            component: FilteredDoctor
         }
     ]
 });
