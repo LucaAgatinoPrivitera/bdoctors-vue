@@ -84,6 +84,7 @@ export default {
         goToDoctorDetail(id) {
             this.$router.push({ name: 'doctorDetail', params: { id } });
         },
+        // lo script serve perché ogni utente ha la foto, anche se poi non esiste come file
         handleImageError(event) {
             event.target.src = 'https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg';
         },
@@ -135,6 +136,8 @@ export default {
                     <div class="col-12 col-md-6 col-lg-4 py-2" v-for="doctor in filteredDoctors" :key="doctor.id">
                         <div class="border p-3 bg-light rounded d-flex flex-column h-100 justify-content-between">
                             <div class="d-flex justify-content-center mb-3">
+
+                                <!-- lo script serve perché ogni utente ha la foto, anche se poi non esiste come file -->
                                 <img v-if="doctor.pic" :src="`${base_url}/storage/images/${doctor.pic}`"
                                     alt="Immagine del dottore" class="img-fluid" @error="handleImageError" />
                                 <img v-else
