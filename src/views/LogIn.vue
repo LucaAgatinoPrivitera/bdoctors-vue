@@ -40,7 +40,7 @@
       // Define a validation schema using Yup
       const schema = yup.object({
         email: yup.string().email('Inserisci un\'email valida').required('L\'email è richiesta'),
-        password: yup.string().min(6, 'La password deve avere almeno 6 caratteri').required('La password è richiesta'),
+        password: yup.string().min(2, 'La password deve avere almeno 2 caratteri').required('La password è richiesta'),
       });
   
       const validate = async () => {
