@@ -16,9 +16,9 @@ export default {
     },
     methods: {
         async fetchDoctor() {
+            const slug = this.$route.params.slug;
             try {
-                const response = await axios.get(`${this.base_url}/api/doctors/${this.id}`);
-                console.log('Risposta API:', response);
+                const response = await axios.get(`${this.base_url}/api/doctors/${slug}`);
                 this.doctor = response.data;
             } catch (error) {
                 console.error('Errore:', error);
@@ -47,10 +47,13 @@ export default {
                     {{ specialization.name }}
                 </li>
             </ul>
-            <router-link :to="{ name: 'contact', params: { doctorId: doctor.id } }" class="btn btn-primary">Contatta</router-link>
-            <router-link :to="{ name: 'review', params: { doctorId: doctor.id } }" class="btn btn-primary">Lascia una recensione</router-link>
+            <router-link :to="{ name: 'contact', params: { doctorId: doctor.id } }"
+                class="btn btn-primary">Contatta</router-link>
+            <router-link :to="{ name: 'review', params: { doctorId: doctor.id } }" class="btn btn-primary">Lascia una
+                recensione</router-link>
         </div>
-    
-        <router-link class="text-decoration-none text-light m-0 py-2 btn btn-primary text-info" to="/">Torna alla home</router-link>
+
+        <router-link class="text-decoration-none text-light m-0 py-2 btn btn-primary text-info" to="/">Torna alla
+            home</router-link>
     </div>
 </template>
