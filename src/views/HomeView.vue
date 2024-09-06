@@ -50,7 +50,7 @@
                                     {{ specialization.name }}
                                 </li>
                             </ul>
-                            <button class="btn btn-info mt-2" @click="goToDoctorDetail(doctor.id)">
+                            <button class="btn btn-info mt-2" @click="goToDoctorDetail(doctor.slug)">
                                 Visualizza Dettagli
                             </button>
                         </div>
@@ -164,8 +164,8 @@ export default {
                 this.handleSearch();
             }
         },
-        goToDoctorDetail(id) {
-            this.$router.push({ name: 'doctorDetail', params: { id } });
+        goToDoctorDetail(doctor) {
+            this.$router.push({ name: 'doctorDetail', params: { slug: doctor.slug } });
         },
         // lo script serve perché ogni utente ha la foto, anche se poi non esiste come file
         handleImageError(event) {

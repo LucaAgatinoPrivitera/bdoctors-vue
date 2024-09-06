@@ -57,7 +57,7 @@ const router = createRouter({
             component: DoctorList
         },
         {
-            path: '/doctors/:id',
+            path: '/doctors/:slug',
             name: 'doctorDetail',
             component: DoctorDetailView,
             props: true
