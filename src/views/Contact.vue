@@ -1,5 +1,5 @@
 <template>
-    <div class="contact-container">
+  <div class="contact-container">
     <div class="contact-content">
       <h1>Contatta il Medico</h1>
       <form @submit.prevent="sendMessage" class="contact-form">
@@ -26,34 +26,38 @@
 import axios from 'axios';
 
 export default {
-    data() {
-        return {
-            form: {
-                name: '',
-                email: '',
-                message: '',
-                doctor_id: '', // Inizializza anche il doctor_id
-            }
-        };
-    },
-    methods: {
-        async sendMessage() {
-            this.form.doctor_id = this.$route.params.doctorId;
-            try {
-                await axios.post(`http://localhost:8000/api/messages`, this.form);
-                alert('Messaggio inviato con successo!');
-                this.$router.push(`/doctors/${this.$route.params.doctorId}`);
-            } catch (error) {
-                if (error.response) {
-                    console.error('Errore nella risposta:', error.response.data);
-                    alert(`Errore: ${JSON.stringify(error.response.data.errors)}`);
-                } else {
-                    console.error('Errore:', error);
-                    alert('Errore sconosciuto.');
-                }
-            }
+  data() {
+    return {
+      form: {
+        name: '',
+        email: '',
+        message: '',
+        doctor_id: '', // Inizializza anche il doctor_id
+      }
+    };
+  },
+  methods: {
+    async sendMessage() {
+      this.form.doctor_id = this.$route.params.doctorId;
+      try {
+        await axios.post(`http://localhost:8000/api/messages`, this.form);
+        alert('Messaggio inviato con successo!');
+        this.$router.push(`/doctors/${this.$route.params.doctorId}`);
+      } catch (error) {
+        if (error.response) {
+          console.error('Errore nella risposta:', error.response.data);
+          alert(`Errore: ${JSON.stringify(error.response.data.errors)}`);
+        } else {
+          console.error('Errore:', error);
+          alert('Errore sconosciuto.');
         }
+      }
     }
+  },
+  mounted() {
+    // Secondo me va bene così, se dicono qualcosa passiamo anche il dottore e mettiamo il cognome
+    document.title = 'Manda un messaggio';
+  }
 };
 </script>
 <style scoped>

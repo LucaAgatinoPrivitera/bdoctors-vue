@@ -40,6 +40,18 @@ export default {
             const params = this.$route.query; // Usa i parametri della query direttamente
             try {
                 const response = await axios.get(`${this.base_url}/api/doctors`, { params });
+                console.log(params);
+
+                // Titolo
+                if (this.$route.query['specializations[]']) {
+                    const specialization = this.$route.query['specializations[]'];
+                    document.title = `Ricerca per ${specialization}`;
+                }
+                else {
+                    document.title = `Lista dei dottori`;
+                }
+
+
                 this.filteredDoctors = response.data.data; // Assumi che i dati dei dottori siano in response.data.data
             } catch (error) {
                 console.error('Errore:', error);
@@ -57,6 +69,9 @@ export default {
                 this.error = 'Errore nel recupero delle specializzazioni.';
             }
         },
-    }
+    },
+    // mounted() {
+    //     document.title = params;
+    // }
 };
 </script>

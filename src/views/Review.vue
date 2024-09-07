@@ -1,11 +1,12 @@
 <template>
-     <div class="review-container">
+    <div class="review-container">
         <div class="form-wrapper">
             <h1>Lascia una Recensione</h1>
             <form @submit.prevent="submitReview">
                 <div class="form-group">
                     <label for="name">Nome</label>
-                    <input type="text" id="name" v-model="form.name_reviewer" class="form-control" placeholder="Inserisci il tuo nome" required>
+                    <input type="text" id="name" v-model="form.name_reviewer" class="form-control"
+                        placeholder="Inserisci il tuo nome" required>
                 </div>
                 <div class="form-group">
                     <label for="rating">Voto</label>
@@ -16,7 +17,8 @@
                 </div>
                 <div class="form-group">
                     <label for="review">Recensione</label>
-                    <textarea id="review" v-model="form.review_text" class="form-control" placeholder="Scrivi la tua recensione" required></textarea>
+                    <textarea id="review" v-model="form.review_text" class="form-control"
+                        placeholder="Scrivi la tua recensione" required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Invia</button>
             </form>
@@ -57,6 +59,10 @@ export default {
                 }
             }
         }
+    },
+    mounted() {
+        // Secondo me va bene così, se dicono qualcosa passiamo anche il dottore e mettiamo il cognome
+        document.title = 'Lascia una recensione';
     }
 };
 </script>
@@ -97,7 +103,8 @@ label {
     color: #333;
 }
 
-.input-group, .form-control {
+.input-group,
+.form-control {
     width: 100%;
     padding: 10px;
     border-radius: 4px;

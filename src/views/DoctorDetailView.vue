@@ -27,6 +27,14 @@ export default {
                 this.loading = false;
             }
         }
+    },
+    // il watch non appena vede che il valore cambia, fa eseguire il codice
+    watch: {
+        doctor(newDoctor) {
+            if (newDoctor && newDoctor.surname) {
+                document.title = newDoctor.surname;
+            }
+        }
     }
 };
 </script>
