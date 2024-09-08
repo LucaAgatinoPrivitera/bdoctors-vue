@@ -45,6 +45,16 @@
                             <p>Indirizzo: {{ doctor.address }}</p>
                             <p>Telefono: {{ doctor.phone }}</p>
                             <p>Bio: {{ doctor.bio }}</p>
+
+
+
+                            <h3 v-if="doctor.specializations && doctor.specializations.length > 0">Specializzazioni:
+                            </h3>
+                            <ul v-if="doctor.specializations">
+                                <li v-for="specialization in doctor.specializations" :key="specialization.id">
+                                    {{ specialization.name }}
+                                </li>
+                            </ul>
                             <ul>
                                 <li v-for="specialization in doctor.specializations" :key="specialization.id">
                                     {{ specialization.name }}
@@ -98,8 +108,8 @@ export default {
             const params = new URLSearchParams(this.$route.query);
             try {
                 const response = await axios.get(`${this.base_url}/api/doctors`, { params });
-                console.log('Dati filtrati dei dottori:', response.data); // Aggiungi questo log
-                this.filteredDoctors = response.data.data || []; // Assicurati che `data` sia sempre un array
+                console.log('Dati dei dottori:', response.data.data); // Log dei dati dei dottori
+                this.filteredDoctors = response.data.data || [];
             } catch (error) {
                 console.error('Errore:', error);
                 this.error = 'Errore nel recupero dei dati.';
@@ -107,6 +117,7 @@ export default {
                 this.loading = false;
             }
         }
+
         ,
         async fetchSpecializations() {
             try {
