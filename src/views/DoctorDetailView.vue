@@ -32,28 +32,103 @@ export default {
 </script>
 
 <template>
-    <div class="container text-light">
-        <div v-if="loading">Caricamento...</div>
-        <div v-else-if="error">Errore: {{ error }}</div>
-        <div v-else>
-            <h1>{{ doctor.surname }}</h1>
-            <img v-if="doctor.pic" :src="`${base_url}/storage/images/${doctor.pic}`" alt="Immagine del dottore">
-            <p>Indirizzo: {{ doctor.address }}</p>
-            <p>Telefono: {{ doctor.phone }}</p>
-            <p>Bio: {{ doctor.bio }}</p>
-            <h3>Specializzazioni:</h3>
-            <ul>
-                <li v-for="specialization in doctor.specializations" :key="specialization.id">
+    <div class="doctor-detail container text-light p-4">
+        <div v-if="loading" class="text-center">
+            <p class="loading-message">Caricamento...</p>
+        </div>
+        <div v-else-if="error" class="text-center text-danger">
+            <p>Errore: {{ error }}</p>
+        </div>
+        <div v-else class="doctor-card bg-dark p-4 rounded shadow">
+            <h1 class="doctor-name display-4 text-info">{{ doctor.surname }}</h1>
+            <div class="doctor-info d-flex align-items-center my-4">
+                <img v-if="doctor.pic" :src="`${base_url}/storage/images/${doctor.pic}`" alt="Immagine del dottore"
+                     class="doctor-img rounded-circle me-4">
+                <div>
+                    <p><strong>Indirizzo:</strong> {{ doctor.address }}</p>
+                    <p><strong>Telefono:</strong> {{ doctor.phone }}</p>
+                    <p><strong>Bio:</strong> {{ doctor.bio }}</p>
+                </div>
+            </div>
+            <h3 class="specializations-title text-info">Specializzazioni:</h3>
+            <ul class="specializations-list list-unstyled">
+                <li v-for="specialization in doctor.specializations" :key="specialization.id" class="specialization-item">
                     {{ specialization.name }}
                 </li>
             </ul>
-            <router-link :to="{ name: 'contact', params: { doctorId: doctor.id } }"
-                class="btn btn-primary">Contatta</router-link>
-            <router-link :to="{ name: 'review', params: { doctorId: doctor.id } }" class="btn btn-primary">Lascia una
-                recensione</router-link>
+            <div class="actions mt-4">
+                <router-link :to="{ name: 'contact', params: { doctorId: doctor.id } }" class="btn btn-primary me-2">
+                    Contatta
+                </router-link>
+                <router-link :to="{ name: 'review', params: { doctorId: doctor.id } }" class="btn btn-secondary">
+                    Lascia una recensione
+                </router-link>
+            </div>
         </div>
-
-        <router-link class="text-decoration-none text-light m-0 py-2 btn btn-primary text-info" to="/">Torna alla
-            home</router-link>
+        <router-link class="back-home btn btn-outline-light mt-3" to="/">Torna alla home</router-link>
     </div>
 </template>
+
+<style scoped>
+.doctor-detail {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.loading-message {
+    font-size: 1.5rem;
+    color: #f0ad4e;
+}
+
+.doctor-card {
+    background-color: #2c3e50;
+}
+
+.doctor-name {
+    font-weight: bold;
+}
+
+.doctor-info {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.doctor-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.specializations-title {
+    margin-top: 20px;
+}
+
+.specializations-list {
+    padding-left: 0;
+}
+
+.specialization-item {
+    font-size: 1.2rem;
+    margin: 5px 0;
+}
+
+.actions .btn {
+    font-size: 1rem;
+}
+
+.back-home {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .doctor-info {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .doctor-img {
+        margin-bottom: 20px;
+    }
+}
+</style>
