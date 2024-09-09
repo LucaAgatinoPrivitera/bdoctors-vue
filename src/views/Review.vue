@@ -2,6 +2,12 @@
     <div class="review-container">
         <div class="form-wrapper">
             <h1>Lascia una Recensione</h1>
+
+            <!-- Messaggio di successo -->
+            <div v-if="successMessage" class="alert alert-success" role="alert">
+                {{ successMessage }}
+            </div>
+
             <form @submit.prevent="submitReview">
                 <div class="form-group">
                     <label for="name">Nome</label>
@@ -37,7 +43,8 @@ export default {
                 stars: '',
                 review_text: '',
                 doctor_id: '', // Inizializza anche il doctor_id
-            }
+            },
+            successMessage: '', // Variabile per il messaggio di successo
         };
     },
     methods: {
@@ -47,9 +54,13 @@ export default {
             console.log(this.form); // Verifica i dati inviati
             try {
                 await axios.post(`http://localhost:8000/api/reviews`, this.form);
-                alert('Recensione inviata con successo!');
-                const doctorSlug = this.$route.params.slug;
-                this.$router.push(`/doctors/${doctorSlug}`);
+                this.successMessage = 'Recensione inviata con successo!';
+                
+                // Reindirizza alla pagina del dottore dopo 3 secondi
+                setTimeout(() => {
+                    const doctorSlug = this.$route.params.slug;
+                    this.$router.push(`/doctors/${doctorSlug}`);
+                }, 2000);
             } catch (error) {
                 if (error.response) {
                     console.error('Errore nella risposta:', error.response.data);
@@ -132,5 +143,12 @@ textarea.form-control {
 
 .btn-primary:hover {
     background-color: #0056b3;
+}
+
+.alert-success {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    padding: 10px;
+    border-radius: 4px;
 }
 </style>
