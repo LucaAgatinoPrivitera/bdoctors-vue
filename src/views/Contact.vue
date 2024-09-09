@@ -1,7 +1,12 @@
 <template>
   <div class="contact-container">
     <div class="contact-content">
-      <h1>Contatta il Medico</h1>
+      <div class="position-relative">
+        <h1>Contatta il Medico</h1>
+        <button class="btn btn-secondary position-absolute top-0" @click="goBackToDoctor"><i
+            class="fa-solid fa-arrow-left"></i></button>
+      </div>
+
       <form @submit.prevent="sendMessage" class="contact-form">
         <div class="form-group">
           <label for="name">Nome</label>
@@ -37,6 +42,10 @@ export default {
     };
   },
   methods: {
+    goBackToDoctor() {
+      // Naviga alla vista del medico utilizzando lo slug memorizzato
+      this.$router.push({ name: 'doctorDetail', params: { slug: this.doctorSlug } });
+    },
     async sendMessage() {
       this.form.doctor_id = this.$route.params.doctorId;
       try {

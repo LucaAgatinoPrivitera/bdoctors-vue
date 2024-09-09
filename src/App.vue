@@ -13,7 +13,7 @@ import DoctorList from './components/DoctorList.vue';
       <div class="container-fluid m-0 py-2">
         <nav class="container d-flex justify-space-around w-100">
           <div class="w-100">
-            <h1 class="m-0 p-0 text-light">BDoctors</h1>
+            <h1 class="m-0 p-0 text-light"><router-link class="text-decoration-none text-light " to="/">BDoctors</router-link></h1>
           </div>
           <div class="w-100 d-flex align-items-center justify-content-end">
             <p class="ms-3 mb-0 pb-0"><router-link class="text-decoration-none text-light "

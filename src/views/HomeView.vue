@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid m-0 p-0 bg-white">
+    <div class="container-fluid m-0 p-0 pt-2 bg-white">
         <div>
             <h2 class="container text-success">Lista dei Dottori</h2>
         </div>
