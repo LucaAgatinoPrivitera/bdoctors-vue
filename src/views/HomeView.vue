@@ -55,11 +55,6 @@
                                     {{ specialization.name }}
                                 </li>
                             </ul>
-                            <ul>
-                                <li v-for="specialization in doctor.specializations" :key="specialization.id">
-                                    {{ specialization.name }}
-                                </li>
-                            </ul>
                             <button class="btn btn-info mt-2" @click="goToDoctorDetail(doctor.slug)">
                                 Visualizza Dettagli
                             </button>
