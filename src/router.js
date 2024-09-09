@@ -68,7 +68,7 @@ const router = createRouter({
             component: Contact
         },
         {
-            path: '/review/:doctorId/:slug',
+            path: '/review/:doctorId:slug',
             name: 'review',
             component: Review
         },
