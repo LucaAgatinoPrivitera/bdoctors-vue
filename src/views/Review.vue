@@ -48,7 +48,8 @@ export default {
             try {
                 await axios.post(`http://localhost:8000/api/reviews`, this.form);
                 alert('Recensione inviata con successo!');
-                this.$router.push(`/doctors/${this.$route.params.doctorId}`);
+                const doctorSlug = this.$route.params.slug;
+                this.$router.push(`/doctors/${doctorSlug}`);
             } catch (error) {
                 if (error.response) {
                     console.error('Errore nella risposta:', error.response.data);

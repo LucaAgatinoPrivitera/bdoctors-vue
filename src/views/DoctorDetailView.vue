@@ -17,6 +17,7 @@ export default {
     methods: {
         async fetchDoctor() {
             const slug = this.$route.params.slug;
+            console.log('Slug ricevuto:', slug); // Aggiungi questo log
             try {
                 const response = await axios.get(`${this.base_url}/api/doctors/${slug}`);
                 this.doctor = response.data;
@@ -65,7 +66,7 @@ export default {
                 </li>
             </ul>
             <div class="actions mt-4">
-                <router-link :to="{ name: 'contact', params: { doctorId: doctor.id } }" class="btn btn-primary me-2">
+                <router-link :to="{ name: 'contact', params: { doctorId: doctor.id, slug: doctor.slug } }" class="btn btn-primary me-2">
                     Contatta
                 </router-link>
                 <router-link :to="{ name: 'review', params: { doctorId: doctor.id } }" class="btn btn-secondary">
