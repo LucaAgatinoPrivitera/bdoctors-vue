@@ -2,6 +2,12 @@
   <div class="contact-container">
     <div class="contact-content">
       <h1>Contatta il Medico</h1>
+
+      <!-- Messaggio di successo -->
+      <div v-if="successMessage" class="alert alert-success" role="alert">
+                {{ successMessage }}
+      </div>
+
       <form @submit.prevent="sendMessage" class="contact-form">
         <div class="form-group">
           <label for="name">Nome</label>
@@ -33,7 +39,8 @@ export default {
         email: '',
         message: '',
         doctor_id: '', // Inizializza anche il doctor_id
-      }
+      },
+      successMessage: '', // Variabile per il messaggio di successo
     };
   },
   methods: {
@@ -41,9 +48,14 @@ export default {
       this.form.doctor_id = this.$route.params.doctorId;
       try {
         await axios.post(`http://localhost:8000/api/messages`, this.form);
-        alert('Messaggio inviato con successo!');
-        const doctorSlug = this.$route.params.slug;
-        this.$router.push(`/doctors/${doctorSlug}`);
+        this.successMessage = 'Recensione inviata con successo!';
+                
+           // Reindirizza alla pagina del dottore dopo 3 secondi
+          setTimeout(() => {
+            const doctorSlug = this.$route.params.slug;
+            this.$router.push(`/doctors/${doctorSlug}`);
+          }, 2000);
+
       } catch (error) {
         if (error.response) {
           console.error('Errore nella risposta:', error.response.data);
@@ -132,5 +144,12 @@ button:hover {
   color: #ff0000;
   text-align: center;
   margin-top: 1rem;
+}
+
+.alert-success {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    padding: 10px;
+    border-radius: 4px;
 }
 </style>
