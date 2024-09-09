@@ -1,11 +1,14 @@
 <template>
   <div class="contact-container">
     <div class="contact-content">
-      <h1>Contatta il Medico</h1>
+      <div class="position-relative">
+        <h1>Contatta il Medico</h1>
+        <button class="btn btn-secondary position-absolute top-0" @click="goBackToDoctor"><i
+            class="fa-solid fa-arrow-left"></i></button>
+      </div>
 
-      <!-- Messaggio di successo -->
       <div v-if="successMessage" class="alert alert-success" role="alert">
-                {{ successMessage }}
+        {{ successMessage }}
       </div>
 
       <form @submit.prevent="sendMessage" class="contact-form">
@@ -44,17 +47,21 @@ export default {
     };
   },
   methods: {
+    goBackToDoctor() {
+      // Naviga alla vista del medico utilizzando lo slug memorizzato
+      this.$router.push({ name: 'doctorDetail', params: { slug: this.doctorSlug } });
+    },
     async sendMessage() {
       this.form.doctor_id = this.$route.params.doctorId;
       try {
         await axios.post(`http://localhost:8000/api/messages`, this.form);
         this.successMessage = 'Recensione inviata con successo!';
-                
-           // Reindirizza alla pagina del dottore dopo 3 secondi
-          setTimeout(() => {
-            const doctorSlug = this.$route.params.slug;
-            this.$router.push(`/doctors/${doctorSlug}`);
-          }, 2000);
+
+        // Reindirizza alla pagina del dottore dopo 3 secondi
+        setTimeout(() => {
+          const doctorSlug = this.$route.params.slug;
+          this.$router.push(`/doctors/${doctorSlug}`);
+        }, 2000);
 
       } catch (error) {
         if (error.response) {
@@ -147,9 +154,9 @@ button:hover {
 }
 
 .alert-success {
-    margin-top: 20px;
-    font-size: 1.2rem;
-    padding: 10px;
-    border-radius: 4px;
+  margin-top: 20px;
+  font-size: 1.2rem;
+  padding: 10px;
+  border-radius: 4px;
 }
 </style>

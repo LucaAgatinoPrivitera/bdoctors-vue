@@ -1,7 +1,7 @@
 <template>
-    <div class="container-fluid m-0 p-0 bg-white">
+    <div class="container-fluid m-0 p-0 pt-2 bg-white">
         <div>
-            <h1 class="container text-success">Lista dei Dottori</h1>
+            <h2 class="container text-success">Lista dei Dottori</h2>
         </div>
 
         <div class="container mb-4 text-dark">
@@ -11,20 +11,22 @@
                 </button>
             </h3>
 
-            <div v-if="showSpecializations">
-                <div class="row">
-                    <div class="col-md-4 mb-3" v-for="specialization in specializations" :key="specialization.id">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" :id="specialization.id"
-                                :value="specialization.name" v-model="selectedSpecializations" />
-                            <label class="form-check-label" :for="specialization.id">{{ specialization.name }}</label>
+            <transition @before-enter="beforeEnter" @enter="enter" @leave="leave" name="slide-fade">
+                <div v-if="showSpecializations" class="specializations-container">
+                    <div class="row">
+                        <div class="col-md-4 mb-3" v-for="specialization in specializations" :key="specialization.id">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" :id="specialization.id"
+                                    :value="specialization.name" v-model="selectedSpecializations" />
+                                <label class="form-check-label"
+                                    :for="specialization.id">{{ specialization.name }}</label>
+                            </div>
                         </div>
                     </div>
+                    <button class="btn btn-primary mt-3" @click="handleSearch">Filtra</button>
                 </div>
-                <button class="btn btn-primary mt-3" @click="handleSearch">
-                    Filtra
-                </button>
-            </div>
+            </transition>
+
         </div>
 
         <div class="container" v-if="loading">Caricamento...</div>
@@ -99,6 +101,27 @@ export default {
         await this.fetchSpecializations(); // Carica le specializzazioni quando il componente viene creato
     },
     methods: {
+        beforeEnter(el) {
+            el.style.height = '0';
+            el.style.opacity = '0';
+        },
+        enter(el, done) {
+            const height = el.scrollHeight; // Otteniamo l'altezza dinamica
+            el.style.height = height + 'px';
+            el.style.opacity = '1';
+            el.addEventListener('transitionend', done); // Quando l'animazione termina, chiamiamo done()
+        },
+        leave(el, done) {
+            el.style.height = el.scrollHeight + 'px'; // Iniziamo con l'altezza corrente
+            el.style.opacity = '1';
+            requestAnimationFrame(() => {
+                // Attiviamo la transizione
+                el.style.transition = 'height 0.5s ease, opacity 0.5s ease';
+                el.style.height = '0';
+                el.style.opacity = '0';
+                el.addEventListener('transitionend', done); // Quando la transizione finisce, chiamiamo done()
+            });
+        },
         async fetchDoctors() {
             const params = new URLSearchParams(this.$route.query);
             try {
@@ -111,9 +134,7 @@ export default {
             } finally {
                 this.loading = false;
             }
-        }
-
-        ,
+        },
         async fetchSpecializations() {
             try {
                 const response = await axios.get(`${this.base_url}/api/specializations`);
@@ -194,4 +215,19 @@ export default {
 .btn-secondary {
     margin: 0.5rem;
 }
+
+.specializations-container {
+  overflow: hidden;
+}
+
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: all 0.5s ease;
+}
+
+.slide-fade-enter, 
+.slide-fade-leave-to {
+  opacity: 0;
+}
+
 </style>
