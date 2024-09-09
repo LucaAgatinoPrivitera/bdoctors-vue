@@ -69,7 +69,7 @@ export default {
                 <router-link :to="{ name: 'contact', params: { doctorId: doctor.id, slug: doctor.slug } }" class="btn btn-primary me-2">
                     Contatta
                 </router-link>
-                <router-link :to="{ name: 'review', params: { doctorId: doctor.id } }" class="btn btn-secondary">
+                <router-link :to="{ name: 'review', params: { doctorId: doctor.id,slug: doctor.slug } }" class="btn btn-secondary">
                     Lascia una recensione
                 </router-link>
             </div>

@@ -63,7 +63,7 @@ const router = createRouter({
             props: true
         },
         {
-            path: '/contact/:doctorId',
+            path: '/contact/:doctorId:slug',
             name: 'contact',
             component: Contact
         },

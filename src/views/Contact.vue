@@ -42,7 +42,8 @@ export default {
       try {
         await axios.post(`http://localhost:8000/api/messages`, this.form);
         alert('Messaggio inviato con successo!');
-        this.$router.push(`/doctors/${this.$route.params.doctorId}`);
+        const doctorSlug = this.$route.params.slug;
+        this.$router.push(`/doctors/${doctorSlug}`);
       } catch (error) {
         if (error.response) {
           console.error('Errore nella risposta:', error.response.data);
