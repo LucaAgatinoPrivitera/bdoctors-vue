@@ -152,17 +152,17 @@ export default {
             const params = new URLSearchParams(this.$route.query);
             try {
                 const response = await axios.get(`${this.base_url}/api/doctors`, { params });
-                console.log('Dati della risposta:', response.data);
-                // Controlla se la struttura è corretta e aggiorna la variabile di stato
+                console.log('Dati della risposta:', response.data); // Aggiungi questo log per controllare la struttura dei dati
                 this.doctors = response.data; // Se response.data è l'intero oggetto, assegnalo a this.doctors
-                this.filteredDoctors = response.data.data || []; // Verifica se è un array di medici
+                this.filteredDoctors = response.data || []; // Verifica se è un array di medici
             } catch (error) {
                 console.error('Errore:', error);
                 this.error = 'Errore nel recupero dei dati.';
             } finally {
                 this.loading = false;
             }
-        },
+        }
+        ,
 
 
         async fetchSpecializations() {

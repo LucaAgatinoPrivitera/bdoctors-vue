@@ -1,7 +1,10 @@
 <template>
     <div class="container-fluid m-0 p-0 pt-2 bg-white">
-        <div>
-            <h2 class="text-success container">Risultati della Ricerca</h2>
+        <div class="position-relative container d-flex">
+            <button class="btn btn-secondary"><router-link class="text-decoration-none text-light " to="/"><i
+                        class="fa-solid fa-arrow-left"></i></router-link>
+            </button>
+            <h2 class="text-success container my-0">Risultati della Ricerca</h2>
         </div>
 
         <div v-if="loading">Caricamento...</div>
@@ -98,7 +101,14 @@ export default {
             try {
                 const response = await axios.get(`${this.base_url}/api/doctors`, { params });
                 console.log('Dati dei dottori:', response.data);
-                this.filteredDoctors = response.data.data || [];
+
+                // Assicurati che 'data' esista e sia un array
+                if (response.data && Array.isArray(response.data)) {
+                    this.filteredDoctors = response.data;
+                } else {
+                    console.warn('Dati dei dottori non validi:', response.data);
+                    this.filteredDoctors = [];
+                }
             } catch (error) {
                 console.error('Errore:', error);
                 this.error = 'Errore nel recupero dei dati.';
