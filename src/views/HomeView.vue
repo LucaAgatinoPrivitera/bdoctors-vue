@@ -153,7 +153,9 @@ export default {
             try {
                 const response = await axios.get(`${this.base_url}/api/doctors`, { params });
                 console.log('Dati della risposta:', response.data);
-                this.filteredDoctors = response.data || [];
+                // Controlla se la struttura è corretta e aggiorna la variabile di stato
+                this.doctors = response.data; // Se response.data è l'intero oggetto, assegnalo a this.doctors
+                this.filteredDoctors = response.data.data || []; // Verifica se è un array di medici
             } catch (error) {
                 console.error('Errore:', error);
                 this.error = 'Errore nel recupero dei dati.';
@@ -179,7 +181,7 @@ export default {
         filterDoctorsBySpecialization() {
             if (this.selectedSpecializations.length > 0) {
                 this.filteredDoctors = this.doctors.data.filter(doctor =>
-                    doctor.specializations.some(specialization =>
+                    doctor.specializations && doctor.specializations.some(specialization =>
                         this.selectedSpecializations.includes(specialization.name)
                     )
                 );

@@ -1,6 +1,9 @@
 <template>
-    <div>
-        <h1>Risultati della Ricerca</h1>
+    <div class="container-fluid m-0 p-0 pt-2 bg-white">
+        <div>
+            <h2 class="text-success container">Risultati della Ricerca</h2>
+        </div>
+
         <div v-if="loading">Caricamento...</div>
         <div v-else-if="error">Errore: {{ error }}</div>
         <div v-else>
@@ -18,10 +21,10 @@
                                         src="https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg"
                                         alt="Immagine del dottore" class="img-fluid" />
                                 </div>
-                                <h2>{{ doctor.surname }}</h2>
-                                <p>Indirizzo: {{ doctor.address }}</p>
-                                <p>Telefono: {{ doctor.phone }}</p>
-                                <p>Bio: {{ doctor.bio }}</p>
+                                <h2>{{ doctor.surname || 'Nome non disponibile' }}</h2>
+                                <p>Indirizzo: {{ doctor.address || 'Indirizzo non disponibile' }}</p>
+                                <p>Telefono: {{ doctor.phone || 'Telefono non disponibile' }}</p>
+                                <p>Bio: {{ doctor.bio || 'Bio non disponibile' }}</p>
 
                                 <!-- Aggiungi qui la sezione per le recensioni -->
                                 <div class="review-stars">
@@ -29,25 +32,8 @@
                                     <div
                                         v-if="doctor.reviews_avg_stars !== undefined && doctor.reviews_avg_stars !== null">
                                         <div class="">
-                                            <i class="fa-solid fa-star right opacity-100"
-                                                v-if="getRating(doctor.reviews_avg_stars) >= 0"></i>
-                                            <i class="fa-solid fa-star right opacity-50" v-else></i>
-
-                                            <i class="fa-solid fa-star right opacity-100"
-                                                v-if="getRating(doctor.reviews_avg_stars) >= 1"></i>
-                                            <i class="fa-solid fa-star right opacity-50" v-else></i>
-
-                                            <i class="fa-solid fa-star right opacity-100"
-                                                v-if="getRating(doctor.reviews_avg_stars) >= 2"></i>
-                                            <i class="fa-solid fa-star right opacity-50" v-else></i>
-
-                                            <i class="fa-solid fa-star right opacity-100"
-                                                v-if="getRating(doctor.reviews_avg_stars) >= 3"></i>
-                                            <i class="fa-solid fa-star right opacity-50" v-else></i>
-
-                                            <i class="fa-solid fa-star right opacity-100"
-                                                v-if="getRating(doctor.reviews_avg_stars) >= 4"></i>
-                                            <i class="fa-solid fa-star right opacity-50" v-else></i>
+                                            <i class="fa-solid fa-star" v-for="n in 5" :key="n"
+                                                :class="getStarClass(n - 1, doctor.reviews_avg_stars)"></i>
                                         </div>
                                         <p>{{ parseFloat(doctor.reviews_avg_stars).toFixed(1) }} su 5</p>
                                     </div>
@@ -56,18 +42,10 @@
                                     </div>
                                 </div>
 
-
-
-
-
-
-
-
-
                                 <h3 v-if="doctor.specializations && doctor.specializations.length > 0">
                                     Specializzazioni:
                                 </h3>
-                                <ul v-if="doctor.specializations">
+                                <ul v-if="doctor.specializations && doctor.specializations.length > 0">
                                     <li v-for="specialization in doctor.specializations" :key="specialization.id">
                                         {{ specialization.name }}
                                     </li>
@@ -84,9 +62,6 @@
         </div>
     </div>
 </template>
-
-
-
 
 <script>
 import axios from 'axios';
@@ -106,47 +81,24 @@ export default {
         await this.fetchSpecializations();
     },
     methods: {
+        handleImageError(event) {
+            event.target.src = 'https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg';
+        },
         getStarClass(starIndex, rating) {
-            console.log('Star Index:', starIndex, 'Rating:', rating);
-            // Assicurati che rating sia un numero
             const numericRating = parseFloat(rating);
-            return starIndex <= Math.floor(numericRating) ? 'fas fa-star' : 'far fa-star';
+            return starIndex <= Math.floor(numericRating) ? 'fa-solid fa-star' : 'fa-regular fa-star';
         },
         getRating(rating) {
-            let newVote = rating / 2
-            newVote = newVote.toFixed(2)
-            newVote = Math.round(newVote)
-
-            /* metodo vecchio
-            let x = this.store.filmRequest.vote_average;
-            console.log("x vale", Math.round(x), "il suo tipo è", typeof x);
-            */
-            return newVote;
+            return Math.round(rating / 2);
         },
-        // async fetchDoctors() {
-        //     const params = this.$route.query; // Usa i parametri della query direttamente
-        //     params.sort_by = 'reviews'; // Ordina per recensioni
-
-        //     try {
-        //         const response = await axios.get(`${this.base_url}/api/doctors`, { params });
-
-        //         // Assumi che i dati dei dottori siano in response.data.data
-        //         this.filteredDoctors = response.data.data;
-        //     } catch (error) {
-        //         console.error('Errore:', error);
-        //         this.error = 'Errore nel recupero dei dati.';
-        //     } finally {
-        //         this.loading = false;
-        //     }
-        // },
-
         async fetchDoctors() {
             const params = this.$route.query;
-            params.sort_by = 'reviews'; // Ordina per recensioni
+            console.log('Parametri della query:', params);
 
             try {
                 const response = await axios.get(`${this.base_url}/api/doctors`, { params });
-                this.filteredDoctors = response.data.data;
+                console.log('Dati dei dottori:', response.data);
+                this.filteredDoctors = response.data.data || [];
             } catch (error) {
                 console.error('Errore:', error);
                 this.error = 'Errore nel recupero dei dati.';
@@ -154,10 +106,8 @@ export default {
                 this.loading = false;
             }
         },
-
-        goToDoctorDetail(doctor) {
-            console.log(doctor)
-            this.$router.push({ name: 'doctorDetail', params: { slug: doctor } });
+        goToDoctorDetail(slug) {
+            this.$router.push({ name: 'doctorDetail', params: { slug } });
         },
         async fetchSpecializations() {
             try {
@@ -169,13 +119,5 @@ export default {
             }
         },
     },
-    computed: {
-        parsedRating() {
-            return parseFloat(this.doctor.reviews_avg_stars);
-        }
-    }
-    // mounted() {
-    //     document.title = params;
-    // }
 };
 </script>
