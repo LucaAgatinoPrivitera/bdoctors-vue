@@ -26,7 +26,6 @@
                     <button class="btn btn-primary mt-3" @click="handleSearch">Filtra</button>
                 </div>
             </transition>
-
         </div>
 
         <div class="container" v-if="loading">Caricamento...</div>
@@ -47,8 +46,6 @@
                             <p>Indirizzo: {{ doctor.address }}</p>
                             <p>Telefono: {{ doctor.phone }}</p>
                             <p>Bio: {{ doctor.bio }}</p>
-
-
 
                             <h3 v-if="doctor.specializations && doctor.specializations.length > 0">Specializzazioni:
                             </h3>
@@ -122,12 +119,25 @@ export default {
                 el.addEventListener('transitionend', done); // Quando la transizione finisce, chiamiamo done()
             });
         },
+        // async fetchDoctors() {
+        //     const params = new URLSearchParams(this.$route.query);
+        //     try {
+        //         const response = await axios.get(`${this.base_url}/api/doctors`, { params });
+        //         console.log('Dati dei dottori:', response.data.data); // Log dei dati dei dottori
+        //         this.filteredDoctors = response.data.data || [];
+        //     } catch (error) {
+        //         console.error('Errore:', error);
+        //         this.error = 'Errore nel recupero dei dati.';
+        //     } finally {
+        //         this.loading = false;
+        //     }
+        // },
         async fetchDoctors() {
             const params = new URLSearchParams(this.$route.query);
             try {
                 const response = await axios.get(`${this.base_url}/api/doctors`, { params });
-                console.log('Dati dei dottori:', response.data.data); // Log dei dati dei dottori
-                this.filteredDoctors = response.data.data || [];
+                console.log('Dati della risposta:', response.data); // Aggiungi questo log
+                this.filteredDoctors = response.data || [];
             } catch (error) {
                 console.error('Errore:', error);
                 this.error = 'Errore nel recupero dei dati.';
@@ -135,6 +145,8 @@ export default {
                 this.loading = false;
             }
         },
+
+
         async fetchSpecializations() {
             try {
                 const response = await axios.get(`${this.base_url}/api/specializations`);
@@ -217,17 +229,16 @@ export default {
 }
 
 .specializations-container {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 .slide-fade-enter-active,
 .slide-fade-leave-active {
-  transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
 
-.slide-fade-enter, 
+.slide-fade-enter,
 .slide-fade-leave-to {
-  opacity: 0;
+    opacity: 0;
 }
-
 </style>
