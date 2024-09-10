@@ -63,12 +63,12 @@ const router = createRouter({
             props: true
         },
         {
-            path: '/contact/:doctorId:slug',
+            path: '/contact/:doctorId/:slug',
             name: 'contact',
             component: Contact
         },
         {
-            path: '/review/:doctorId:slug',
+            path: '/review/:doctorId/:slug',
             name: 'review',
             component: Review
         },
