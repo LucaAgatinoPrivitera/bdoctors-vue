@@ -132,11 +132,27 @@ export default {
         //         this.loading = false;
         //     }
         // },
+
+
+        // async fetchDoctors() {
+        //     const params = new URLSearchParams(this.$route.query);
+        //     try {
+        //         const response = await axios.get(`${this.base_url}/api/doctors`, { params });
+        //         console.log('Dati della risposta:', response.data); // Aggiungi questo log
+        //         this.filteredDoctors = response.data || [];
+        //     } catch (error) {
+        //         console.error('Errore:', error);
+        //         this.error = 'Errore nel recupero dei dati.';
+        //     } finally {
+        //         this.loading = false;
+        //     }
+        // },
+
         async fetchDoctors() {
             const params = new URLSearchParams(this.$route.query);
             try {
                 const response = await axios.get(`${this.base_url}/api/doctors`, { params });
-                console.log('Dati della risposta:', response.data); // Aggiungi questo log
+                console.log('Dati della risposta:', response.data);
                 this.filteredDoctors = response.data || [];
             } catch (error) {
                 console.error('Errore:', error);
@@ -150,9 +166,10 @@ export default {
         async fetchSpecializations() {
             try {
                 const response = await axios.get(`${this.base_url}/api/specializations`);
+                console.log('Specializzazioni:', response.data);
                 this.specializations = response.data;
             } catch (error) {
-                console.error('Errore:', error);
+                console.error('Errore nel recupero delle specializzazioni:', error);
                 this.error = 'Errore nel recupero delle specializzazioni.';
             }
         },
@@ -181,13 +198,11 @@ export default {
             }
         },
         handleSearch() {
-            // Costruisci i parametri della query
             const params = new URLSearchParams();
             this.selectedSpecializations.forEach(specialization => {
                 params.append('specializations[]', specialization);
             });
 
-            // Reindirizza alla pagina di ricerca con i parametri della query
             this.$router.push({
                 name: 'search',
                 query: {
@@ -196,6 +211,8 @@ export default {
             }).catch(err => {
                 console.error('Errore nel reindirizzamento:', err);
             });
+
+            this.filterDoctorsBySpecialization(); // Aggiungi questa chiamata
         }
         ,
         handleKeypress(event) {

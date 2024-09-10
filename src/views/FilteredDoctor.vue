@@ -123,14 +123,29 @@ export default {
             */
             return newVote;
         },
+        // async fetchDoctors() {
+        //     const params = this.$route.query; // Usa i parametri della query direttamente
+        //     params.sort_by = 'reviews'; // Ordina per recensioni
+
+        //     try {
+        //         const response = await axios.get(`${this.base_url}/api/doctors`, { params });
+
+        //         // Assumi che i dati dei dottori siano in response.data.data
+        //         this.filteredDoctors = response.data.data;
+        //     } catch (error) {
+        //         console.error('Errore:', error);
+        //         this.error = 'Errore nel recupero dei dati.';
+        //     } finally {
+        //         this.loading = false;
+        //     }
+        // },
+
         async fetchDoctors() {
-            const params = this.$route.query; // Usa i parametri della query direttamente
+            const params = this.$route.query;
             params.sort_by = 'reviews'; // Ordina per recensioni
 
             try {
                 const response = await axios.get(`${this.base_url}/api/doctors`, { params });
-
-                // Assumi che i dati dei dottori siano in response.data.data
                 this.filteredDoctors = response.data.data;
             } catch (error) {
                 console.error('Errore:', error);
@@ -139,6 +154,7 @@ export default {
                 this.loading = false;
             }
         },
+
         goToDoctorDetail(doctor) {
             console.log(doctor)
             this.$router.push({ name: 'doctorDetail', params: { slug: doctor } });
