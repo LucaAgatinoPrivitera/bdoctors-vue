@@ -1,6 +1,8 @@
 <template>
     <div class="review-container">
         <div class="form-wrapper">
+            <button class="btn btn-secondary position-absolute " @click="goBackToDoctor"><i
+                    class="fa-solid fa-arrow-left"></i></button>
             <h1>Lascia una Recensione</h1>
 
             <!-- Messaggio di successo -->
@@ -43,11 +45,15 @@ export default {
                 stars: '',
                 review_text: '',
                 doctor_id: '', // Inizializza anche il doctor_id
-            },
-            successMessage: '', // Variabile per il messaggio di successo
+                doctorSlug: this.$route.params.slug
+            }
         };
     },
     methods: {
+        goBackToDoctor() {
+            // Naviga alla vista del medico utilizzando lo slug memorizzato
+            this.$router.push({ name: 'doctorDetail', params: { slug: this.doctorSlug } });
+        },
         async submitReview() {
             // Associa l'ID del dottore dal route params
             this.form.doctor_id = this.$route.params.doctorId;
