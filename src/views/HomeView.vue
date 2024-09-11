@@ -42,7 +42,11 @@
                                     src="https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg"
                                     alt="Immagine del dottore" class="img-fluid" />
                             </div>
-                            <h2>{{ doctor.surname }}</h2>
+                            <div class="d-flex justify-content-between">
+                                <h2>{{ doctor.surname }}</h2>
+                                <p class="d-flex align-items-center m-0 p-0 text-center">Sponsorizzato {{ doctor.sponsorships[0]?.name }}</p>
+                            </div>
+
                             <p>Indirizzo: {{ doctor.address }}</p>
                             <p>Telefono: {{ doctor.phone }}</p>
                             <p>Bio: {{ doctor.bio }}</p>
@@ -265,4 +269,3 @@ export default {
     opacity: 0;
 }
 </style>
-
