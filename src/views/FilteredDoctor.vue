@@ -1,10 +1,11 @@
 <template>
-    <div class="container-fluid m-0 p-0 pt-2 bg-white">
+    <div class="container-fluid m-0 p-0 pt-2 bg-white altezza">
         <div class="position-relative container d-flex">
             <button class="btn btn-secondary"><router-link class="text-decoration-none text-light " to="/"><i
                         class="fa-solid fa-arrow-left"></i></router-link>
             </button>
-            <h2 class="text-success container my-0">Risultati della Ricerca</h2>
+            <h2 class="text-success container my-0">Risultati della Ricerca per {{ specialization }} :
+                {{ filteredDoctors.length }} </h2>
         </div>
 
         <div v-if="loading">Caricamento...</div>
@@ -116,6 +117,17 @@ export default {
             specializations: [],
         };
     },
+    computed: {
+        // Computed che restituisce i parametri della query
+        params() {
+            console.log(this.$route.query)
+            return this.$route.query;
+        },
+        specialization() {
+            // Se i parametri sono un array, come nel caso di `specializations[]`
+            return this.$route.query['specializations[]'] || 'Nessuna specializzazione trovata';
+        }
+    },
     async created() {
         await this.fetchDoctors();
         await this.fetchSpecializations();
@@ -196,5 +208,9 @@ export default {
 
 .basic {
     background-color: #0A8754;
+}
+
+.altezza{
+    min-height: 50vh;
 }
 </style>
