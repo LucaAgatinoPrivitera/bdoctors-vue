@@ -1,8 +1,7 @@
 <template>
     <div class="review-container">
         <div class="form-wrapper">
-            <button class="btn btn-secondary position-absolute " @click="goBackToDoctor"><i
-                    class="fa-solid fa-arrow-left"></i></button>
+            <button class="btn btn-secondary position-absolute " @click="goBackToDoctor"><i class="fa-solid fa-arrow-left"></i></button>
             <h1>Lascia una Recensione</h1>
 
             <!-- Messaggio di successo -->
@@ -13,20 +12,21 @@
             <form @submit.prevent="submitReview">
                 <div class="form-group">
                     <label for="name">Nome</label>
-                    <input type="text" id="name" v-model="form.name_reviewer" class="form-control"
-                        placeholder="Inserisci il tuo nome" required>
+                    <input type="text" id="name" v-model="form.name_reviewer" class="form-control" placeholder="Inserisci il tuo nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" v-model="form.email_reviewer" class="form-control" placeholder="Inserisci la tua email" required>
                 </div>
                 <div class="form-group">
                     <label for="rating">Voto</label>
-                    <select id="rating" v-model="form.stars" class="form-control" required>
-                        <option value="">Seleziona un voto</option>
-                        <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
-                    </select>
+                    <div class="star-rating">
+                        <span v-for="n in 5" :key="n" :class="{'filled-star': n <= form.stars}" @click="setRating(n)">&#9733;</span>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="review">Recensione</label>
-                    <textarea id="review" v-model="form.review_text" class="form-control"
-                        placeholder="Scrivi la tua recensione" required></textarea>
+                    <textarea id="review" v-model="form.review_text" class="form-control" placeholder="Scrivi la tua recensione" required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Invia</button>
             </form>
@@ -42,11 +42,13 @@ export default {
         return {
             form: {
                 name_reviewer: '',
-                stars: '',
+                email_reviewer: '',
+                stars: 0, // Inizializza a 0 stelle
                 review_text: '',
                 doctor_id: '', // Inizializza anche il doctor_id
                 doctorSlug: this.$route.params.slug
-            }
+            },
+            successMessage: ''
         };
     },
     methods: {
@@ -54,15 +56,16 @@ export default {
             // Naviga alla vista del medico utilizzando lo slug memorizzato
             this.$router.push({ name: 'doctorDetail', params: { slug: this.doctorSlug } });
         },
+        setRating(stars) {
+            this.form.stars = stars; // Imposta il voto cliccando sulle stelle
+        },
         async submitReview() {
-            // Associa l'ID del dottore dal route params
             this.form.doctor_id = this.$route.params.doctorId;
-            console.log(this.form); // Verifica i dati inviati
             try {
                 await axios.post(`http://localhost:8000/api/reviews`, this.form);
                 this.successMessage = 'Recensione inviata con successo!';
                 
-                // Reindirizza alla pagina del dottore dopo 3 secondi
+                // Reindirizza alla pagina del dottore dopo 2 secondi
                 setTimeout(() => {
                     const doctorSlug = this.$route.params.slug;
                     this.$router.push(`/doctors/${doctorSlug}`);
@@ -79,14 +82,14 @@ export default {
         }
     },
     mounted() {
-        // Secondo me va bene così, se dicono qualcosa passiamo anche il dottore e mettiamo il cognome
         document.title = 'Lascia una recensione';
     }
 };
 </script>
+
 <style scoped>
 .review-container {
-    background: url('https://img.freepik.com/foto-gratuito/analisi-e-stetoscopio-a-impulsi-medici_23-2148438994.jpg?t=st=1725623317~exp=1725626917~hmac=b0fcaaa86fc4239377e21118ed87f82a137f68fa8dd73d387190bf656a022b10&w=1060') no-repeat center center fixed;
+    background: url('https://img.freepik.com/foto-gratuito/analisi-e-stetoscopio-a-impulsi-medici_23-2148438994.jpg') no-repeat center center fixed;
     background-size: cover;
     height: 94vh;
     display: flex;
@@ -121,8 +124,8 @@ label {
     color: #333;
 }
 
-.input-group,
-.form-control {
+input.form-control,
+textarea.form-control {
     width: 100%;
     padding: 10px;
     border-radius: 4px;
@@ -156,5 +159,15 @@ textarea.form-control {
     font-size: 1.2rem;
     padding: 10px;
     border-radius: 4px;
+}
+
+.star-rating {
+    font-size: 2rem;
+    color: #ddd;
+    cursor: pointer;
+}
+
+.star-rating .filled-star {
+    color: #ffcc00;
 }
 </style>
