@@ -24,7 +24,12 @@
                                         src="https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg"
                                         alt="Immagine del dottore" class="img-fluid" />
                                 </div>
-                                <h2>{{ doctor.surname || 'Nome non disponibile' }}</h2>
+                                
+                                <div class="d-flex justify-content-between">
+                                    <h2>{{ doctor.surname || 'Nome non disponibile' }}</h2>
+                                    <p class="d-flex align-items-center m-0 p-0 text-center">Sponsorizzato
+                                        {{ doctor.sponsorships[0]?.name }}</p>
+                                </div>
                                 <p>Indirizzo: {{ doctor.address || 'Indirizzo non disponibile' }}</p>
                                 <p>Telefono: {{ doctor.phone || 'Telefono non disponibile' }}</p>
                                 <p>Bio: {{ doctor.bio || 'Bio non disponibile' }}</p>
