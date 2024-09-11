@@ -28,6 +28,7 @@
                                 <p>Indirizzo: {{ doctor.address || 'Indirizzo non disponibile' }}</p>
                                 <p>Telefono: {{ doctor.phone || 'Telefono non disponibile' }}</p>
                                 <p>Bio: {{ doctor.bio || 'Bio non disponibile' }}</p>
+                                <p>Ciao {{ doctor.reviews.stars }}</p>
 
                                 <!-- Aggiungi qui la sezione per le recensioni -->
                                 <div class="review-stars">
@@ -105,11 +106,21 @@ export default {
             event.target.src = 'https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg';
         },
         getStarClass(starIndex, rating) {
+            console.log('Star Index:', starIndex, 'Rating:', rating);
+            // Assicurati che rating sia un numero
             const numericRating = parseFloat(rating);
-            return starIndex <= Math.floor(numericRating) ? 'fa-solid fa-star' : 'fa-regular fa-star';
+            return starIndex <= Math.floor(numericRating) ? 'fas fa-star' : 'far fa-star';
         },
         getRating(rating) {
-            return Math.round(rating / 2);
+            let newVote = rating / 2
+            newVote = newVote.toFixed(2)
+            newVote = Math.round(newVote)
+
+            /* metodo vecchio
+            let x = this.store.filmRequest.vote_average;
+            console.log("x vale", Math.round(x), "il suo tipo è", typeof x);
+            */
+            return newVote;
         },
         async fetchDoctors() {
             const params = this.$route.query;
