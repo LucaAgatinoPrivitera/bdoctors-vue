@@ -1,38 +1,33 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import TheWelcome from './components/TheWelcome.vue';
-import HelloWorld from './components/HelloWorld.vue'
-import DoctorList from './components/DoctorList.vue';
-
-</script>
-
 <template>
   <div id="app">
     <!-- Header, Navbar, o altri componenti comuni possono andare qui -->
     <header>
-      <div class="container-fluid m-0 py-2">
-        <nav class="container d-flex justify-space-around w-100">
-          <div class="w-100">
-            <h1 class="m-0 p-0 text-light"><router-link class="text-decoration-none text-light " to="/">BDoctors</router-link></h1>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+          <h1 class="m-0 p-0 text-light"><router-link class="text-decoration-none text-light " to="/">BDoctors</router-link></h1>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <router-link class="nav-link text-light" to="/login">Accedi</router-link>
+              </li>
+              <li class="nav-item">
+                <router-link class="nav-link text-light" to="/register">Registrati</router-link>
+              </li>
+              <li class="nav-item">
+                <router-link class="nav-link text-light" to="/">Home</router-link>
+              </li>
+              <li class="nav-item">
+                <router-link class="nav-link text-light" to="/doctors">Dottori</router-link>
+              </li>
+              <!-- Aggiungi altre voci se necessario -->
+            </ul>
           </div>
-          <div class="w-100 d-flex align-items-center justify-content-end">
-            <p class="ms-3 mb-0 pb-0"><router-link class="text-decoration-none text-light "
-                to="/login">Accedi</router-link></p>
-            <p class="ms-3 mb-0 pb-0"><router-link class="text-decoration-none text-light "
-                to="/register">Registrati</router-link></p>
-            <p class="ms-3 mb-0 pb-0"><router-link class="text-decoration-none text-light " to="/">Home</router-link>
-            </p>
-            <!-- <p class="ms-3 mb-0 pb-0"><router-link class="text-decoration-none text-light "
-              to="/about">About</router-link></p> -->
-            <p class="ms-3 mb-0 pb-0"><router-link class="text-decoration-none text-light "
-                to="/doctors">Dottori</router-link></p>
-            <!-- <p class="ms-3 mb-0 pb0"><router-link class="text-decoration-none text-light "
-              to="/contact">Contact</router-link></p> -->
-          </div>
-
-        </nav>
-      </div>
-
+        </div>
+      </nav>
     </header>
 
     <!-- Questo è il punto in cui verranno visualizzati i componenti delle rotte -->
@@ -42,4 +37,6 @@ import DoctorList from './components/DoctorList.vue';
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* Eventuali stili personalizzati */
+</style>
