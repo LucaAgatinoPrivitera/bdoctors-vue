@@ -17,14 +17,28 @@
                     <div class="row text-dark">
                         <div class="col-12 col-md-6 col-lg-4 py-2" v-for="doctor in filteredDoctors" :key="doctor.id">
                             <div class="border p-3 bg-light rounded d-flex flex-column h-100 justify-content-between">
-                                <div class="d-flex justify-content-center mb-3">
+                                <div class="d-flex justify-content-center mb-3 position-relative">
                                     <img v-if="doctor.pic" :src="`${base_url}/storage/images/${doctor.pic}`"
                                         alt="Immagine del dottore" class="img-fluid" @error="handleImageError" />
                                     <img v-else
                                         src="https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg"
                                         alt="Immagine del dottore" class="img-fluid" />
+                                    <p v-if="doctor.sponsorships[0]?.name == 'Gold'"
+                                        class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor gold p-2 rounded-pill">
+                                        Sponsorizzato
+                                        {{ doctor.sponsorships[0]?.name }}</p>
+
+                                    <p v-if="doctor.sponsorships[0]?.name == 'Premium'"
+                                        class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor premium p-2 rounded-pill">
+                                        Sponsorizzato
+                                        {{ doctor.sponsorships[0]?.name }}</p>
+
+                                    <p v-if="doctor.sponsorships[0]?.name == 'Basic'"
+                                        class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor basic p-2 rounded-pill text-light">
+                                        Sponsorizzato
+                                        {{ doctor.sponsorships[0]?.name }}</p>
                                 </div>
-                                
+
                                 <div class="d-flex justify-content-between">
                                     <h2>{{ doctor.surname || 'Nome non disponibile' }}</h2>
                                     <p class="d-flex align-items-center m-0 p-0 text-center">Sponsorizzato
@@ -164,3 +178,23 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.sponsor {
+    top: 5%;
+    right: 2.5% !important;
+    background-color: rgb(206, 37, 102);
+}
+
+.gold {
+    background-color: #FFD700;
+}
+
+.premium {
+    background-color: #D7DEDC;
+}
+
+.basic {
+    background-color: #0A8754;
+}
+</style>
