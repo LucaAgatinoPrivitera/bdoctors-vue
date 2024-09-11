@@ -51,6 +51,15 @@ export default {
                 await axios.post(`${this.base_url}/api/reviews`, this.reviewForm);
                 alert('Recensione inviata con successo!');
                 this.showReviewForm = false;
+                 // Reset del form dopo l'invio
+                this.reviewForm = {
+                    name_reviewer: '',
+                    email_reviewer: '',
+                    stars: 0,
+                    review_text: '',
+                    doctor_id: ''
+                };
+
             } catch (error) {
                 console.error('Errore:', error);
             }
@@ -61,6 +70,13 @@ export default {
                 await axios.post(`${this.base_url}/api/messages`, this.contactForm);
                 alert('Messaggio inviato con successo!');
                 this.showContactForm = false;
+                // Reset del form dopo l'invio
+                this.contactForm = {
+                  name: '',
+                  email: '',
+                  message: '',
+                  doctor_id: ''
+                };
             } catch (error) {
                 console.error('Errore:', error);
             }
