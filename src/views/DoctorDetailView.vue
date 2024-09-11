@@ -8,7 +8,22 @@ export default {
             doctor: null,
             loading: true,
             error: null,
-            base_url: 'http://127.0.0.1:8000'
+            base_url: 'http://127.0.0.1:8000',
+            showReviewForm: false,
+            showContactForm: false,
+            contactForm: {
+                name: '',
+                email: '',
+                message: '',
+                doctor_id: ''
+            },
+            reviewForm: {
+                name_reviewer: '',
+                email_reviewer: '',
+                stars: 0,
+                review_text: '',
+                doctor_id: ''
+            }
         };
     },
     async created() {
@@ -17,7 +32,6 @@ export default {
     methods: {
         async fetchDoctor() {
             const slug = this.$route.params.slug;
-            console.log('Slug ricevuto:', slug); // Aggiungi questo log
             try {
                 const response = await axios.get(`${this.base_url}/api/doctors/${slug}`);
                 this.doctor = response.data;
@@ -27,13 +41,28 @@ export default {
             } finally {
                 this.loading = false;
             }
-        }
-    },
-    // il watch non appena vede che il valore cambia, fa eseguire il codice
-    watch: {
-        doctor(newDoctor) {
-            if (newDoctor && newDoctor.surname) {
-                document.title = newDoctor.surname;
+        },
+        setRating(stars) {
+            this.reviewForm.stars = stars; 
+        },
+        async submitReview() {
+            this.reviewForm.doctor_id = this.doctor.id;
+            try {
+                await axios.post(`${this.base_url}/api/reviews`, this.reviewForm);
+                alert('Recensione inviata con successo!');
+                this.showReviewForm = false;
+            } catch (error) {
+                console.error('Errore:', error);
+            }
+        },
+        async sendMessage() {
+            this.contactForm.doctor_id = this.doctor.id;
+            try {
+                await axios.post(`${this.base_url}/api/messages`, this.contactForm);
+                alert('Messaggio inviato con successo!');
+                this.showContactForm = false;
+            } catch (error) {
+                console.error('Errore:', error);
             }
         }
     }
@@ -51,7 +80,7 @@ export default {
         <div v-else class="doctor-card bg-dark p-4 rounded shadow">
             <h1 class="doctor-name display-4 text-info">{{ doctor.surname }}</h1>
             <div class="doctor-info d-flex align-items-center my-4">
-                <img v-if="doctor.pic >1" :src="`${base_url}/storage/images/${doctor.pic}`" alt="Immagine del dottore"
+                <img v-if="doctor.pic" :src="`${base_url}/storage/images/${doctor.pic}`" alt="Immagine del dottore"
                     class="img-fluid me-2 rounded-circle" style="width: 200px;" @error="handleImageError" />
                 <img v-else src="https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg"
                     alt="Immagine del dottore" class="img-fluid me-2 rounded-circle" style="width: 200px;" />
@@ -68,15 +97,61 @@ export default {
                     {{ specialization.name }}
                 </li>
             </ul>
+            <!-- Sezioni per Recensione e Contatto -->
             <div class="actions mt-4">
-                <router-link :to="{ name: 'contact', params: { doctorId: doctor.id, slug: doctor.slug } }"
-                    class="btn btn-primary me-2">
-                    Contatta
-                </router-link>
-                <router-link :to="{ name: 'review', params: { doctorId: doctor.id, slug: doctor.slug } }"
-                    class="btn btn-secondary">
-                    Lascia una recensione
-                </router-link>
+                <button class="btn btn-primary me-2" @click="showContactForm = !showContactForm">Contatta</button>
+                <button class="btn btn-secondary" @click="showReviewForm = !showReviewForm">Lascia una Recensione</button>
+            </div>
+
+            <!-- Modulo di Contatto -->
+            <div v-if="showContactForm" class="contact-container mt-4">
+                <div class="contact-content">
+                    <h2>Contatta il Medico</h2>
+                    <form @submit.prevent="sendMessage" class="contact-form">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nome</label>
+                            <input type="text" id="name" v-model="contactForm.name" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" v-model="contactForm.email" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Messaggio</label>
+                            <textarea id="message" v-model="contactForm.message" rows="4" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Invia Messaggio</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Modulo di Recensione -->
+            <div v-if="showReviewForm" class="review-container mt-4">
+                <div class="form-wrapper">
+                    <h2>Lascia una Recensione</h2>
+                    <form @submit.prevent="submitReview">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nome</label>
+                            <input type="text" id="name" v-model="reviewForm.name_reviewer" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" v-model="reviewForm.email_reviewer" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="rating" class="form-label">Voto</label>
+                            <div class="star-rating">
+                                <span v-for="n in 5" :key="n" :class="{'filled-star': n <= reviewForm.stars}" 
+                                      @click="setRating(n)">&#9733;</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="review" class="form-label">Recensione</label>
+                            <textarea id="review" v-model="reviewForm.review_text" class="form-control" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Invia Recensione</button>
+                    </form>
+                </div>
             </div>
         </div>
         <router-link class="back-home btn btn-outline-light mt-3" to="/">Torna alla home</router-link>
@@ -87,6 +162,22 @@ export default {
 .doctor-detail {
     max-width: 900px;
     margin: 0 auto;
+}
+
+.review-container, .contact-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    color: black;
+}
+.star-rating {
+    font-size: 2rem;
+    color: #ddd;
+    cursor: pointer;
+}
+
+.star-rating .filled-star {
+    color: #ffcc00;
 }
 
 .loading-message {
@@ -145,4 +236,5 @@ export default {
         margin-bottom: 20px;
     }
 }
+
 </style>
