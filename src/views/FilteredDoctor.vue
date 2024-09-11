@@ -28,7 +28,7 @@
                                 <p>Indirizzo: {{ doctor.address || 'Indirizzo non disponibile' }}</p>
                                 <p>Telefono: {{ doctor.phone || 'Telefono non disponibile' }}</p>
                                 <p>Bio: {{ doctor.bio || 'Bio non disponibile' }}</p>
-                                <p>Ciao {{ doctor.reviews.stars }}</p>
+                                <p>{{ doctor.reviews.stars }}</p>
 
                                 <!-- Aggiungi qui la sezione per le recensioni -->
                                 <div class="review-stars">
