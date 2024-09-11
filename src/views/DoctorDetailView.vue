@@ -52,9 +52,9 @@ export default {
             <h1 class="doctor-name display-4 text-info">{{ doctor.surname }}</h1>
             <div class="doctor-info d-flex align-items-center my-4">
                 <img v-if="doctor.pic >1" :src="`${base_url}/storage/images/${doctor.pic}`" alt="Immagine del dottore"
-                    class="img-fluid" @error="handleImageError" />
+                    class="img-fluid me-2 rounded-circle" style="width: 200px;" @error="handleImageError" />
                 <img v-else src="https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg"
-                    alt="Immagine del dottore" class="img-fluid" />
+                    alt="Immagine del dottore" class="img-fluid me-2 rounded-circle" style="width: 200px;" />
                 <div>
                     <p><strong>Indirizzo:</strong> {{ doctor.address }}</p>
                     <p><strong>Telefono:</strong> {{ doctor.phone }}</p>
