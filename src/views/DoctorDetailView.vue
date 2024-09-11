@@ -51,8 +51,10 @@ export default {
         <div v-else class="doctor-card bg-dark p-4 rounded shadow">
             <h1 class="doctor-name display-4 text-info">{{ doctor.surname }}</h1>
             <div class="doctor-info d-flex align-items-center my-4">
-                <img v-if="doctor.pic" :src="`${base_url}/storage/images/${doctor.pic}`" alt="Immagine del dottore"
-                     class="doctor-img rounded-circle me-4">
+                <img v-if="doctor.pic >1" :src="`${base_url}/storage/images/${doctor.pic}`" alt="Immagine del dottore"
+                    class="img-fluid" @error="handleImageError" />
+                <img v-else src="https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg"
+                    alt="Immagine del dottore" class="img-fluid" />
                 <div>
                     <p><strong>Indirizzo:</strong> {{ doctor.address }}</p>
                     <p><strong>Telefono:</strong> {{ doctor.phone }}</p>
@@ -61,15 +63,18 @@ export default {
             </div>
             <h3 class="specializations-title text-info">Specializzazioni:</h3>
             <ul class="specializations-list list-unstyled">
-                <li v-for="specialization in doctor.specializations" :key="specialization.id" class="specialization-item">
+                <li v-for="specialization in doctor.specializations" :key="specialization.id"
+                    class="specialization-item">
                     {{ specialization.name }}
                 </li>
             </ul>
             <div class="actions mt-4">
-                <router-link :to="{ name: 'contact', params: { doctorId: doctor.id, slug: doctor.slug } }" class="btn btn-primary me-2">
+                <router-link :to="{ name: 'contact', params: { doctorId: doctor.id, slug: doctor.slug } }"
+                    class="btn btn-primary me-2">
                     Contatta
                 </router-link>
-                <router-link :to="{ name: 'review', params: { doctorId: doctor.id,slug: doctor.slug } }" class="btn btn-secondary">
+                <router-link :to="{ name: 'review', params: { doctorId: doctor.id, slug: doctor.slug } }"
+                    class="btn btn-secondary">
                     Lascia una recensione
                 </router-link>
             </div>
