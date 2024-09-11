@@ -35,8 +35,25 @@
                                     <div
                                         v-if="doctor.reviews_avg_stars !== undefined && doctor.reviews_avg_stars !== null">
                                         <div class="">
-                                            <i class="fa-solid fa-star" v-for="n in 5" :key="n"
-                                                :class="getStarClass(n - 1, doctor.reviews_avg_stars)"></i>
+                                            <i class="fa-solid fa-star right opacity-100"
+                                                v-if="getRating(doctor.reviews_avg_stars) >= 0"></i>
+                                            <i class="fa-solid fa-star right opacity-50" v-else></i>
+
+                                            <i class="fa-solid fa-star right opacity-100"
+                                                v-if="getRating(doctor.reviews_avg_stars) >= 1"></i>
+                                            <i class="fa-solid fa-star right opacity-50" v-else></i>
+
+                                            <i class="fa-solid fa-star right opacity-100"
+                                                v-if="getRating(doctor.reviews_avg_stars) >= 2"></i>
+                                            <i class="fa-solid fa-star right opacity-50" v-else></i>
+
+                                            <i class="fa-solid fa-star right opacity-100"
+                                                v-if="getRating(doctor.reviews_avg_stars) >= 3"></i>
+                                            <i class="fa-solid fa-star right opacity-50" v-else></i>
+
+                                            <i class="fa-solid fa-star right opacity-100"
+                                                v-if="getRating(doctor.reviews_avg_stars) >= 4"></i>
+                                            <i class="fa-solid fa-star right opacity-50" v-else></i>
                                         </div>
                                         <p>{{ parseFloat(doctor.reviews_avg_stars).toFixed(1) }} su 5</p>
                                     </div>
