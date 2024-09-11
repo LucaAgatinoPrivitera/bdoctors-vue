@@ -47,9 +47,12 @@
                             <p>Telefono: {{ doctor.phone }}</p>
                             <p>Bio: {{ doctor.bio }}</p>
 
-                            <h3 v-if="doctor.specializations && doctor.specializations.length > 0">Specializzazioni:
+                            <h3>Specializzazioni:
                             </h3>
-                            <ul v-if="doctor.specializations">
+                            <div v-if="doctor.specializations.length === 0">
+                                <p>Nessuna specializzazione</p>
+                            </div>
+                            <ul v-else>
                                 <li v-for="specialization in doctor.specializations" :key="specialization.id">
                                     {{ specialization.name }}
                                 </li>
