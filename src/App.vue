@@ -25,7 +25,7 @@ import DoctorList from './components/DoctorList.vue';
             <!-- <p class="ms-3 mb-0 pb-0"><router-link class="text-decoration-none text-light "
               to="/about">About</router-link></p> -->
             <p class="ms-3 mb-0 pb-0"><router-link class="text-decoration-none text-light "
-                to="/doctors">Doctors</router-link></p>
+                to="/doctors">Dottori</router-link></p>
             <!-- <p class="ms-3 mb-0 pb0"><router-link class="text-decoration-none text-light "
               to="/contact">Contact</router-link></p> -->
           </div>
