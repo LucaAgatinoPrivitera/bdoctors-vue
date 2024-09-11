@@ -238,6 +238,7 @@ export default {
         document.title = 'Lista dei Dottori';
     }
 };
+
 </script>
 
 <style scoped>
@@ -264,3 +265,4 @@ export default {
     opacity: 0;
 }
 </style>
+
