@@ -96,31 +96,44 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            doctors: { data: [] },
+            doctors: [],
             filteredDoctors: [],
-            specializations: [], // Aggiungi la variabile per le specializzazioni
-            selectedSpecializations: [], // Aggiungi la variabile per le specializzazioni selezionate
+            specializations: [],
+            selectedSpecializations: [],
             loading: true,
             error: null,
             base_url: 'http://127.0.0.1:8000',
             page: 1,
             perPage: 10,
             searchQuery: '',
-            showSpecializations: true // Imposta a true per mostrare subito le specializzazioni
+            showSpecializations: true,
+            showOnlySponsored: true // Flag per determinare se mostrare solo i sponsorizzati
         };
     },
+
     async created() {
         await this.fetchDoctors();
-        await this.fetchSpecializations(); // Carica le specializzazioni quando il componente viene creato
+        await this.fetchSpecializations();
     },
     methods: {
+
         async fetchDoctors() {
             const params = new URLSearchParams(this.$route.query);
             try {
                 const response = await axios.get(`${this.base_url}/api/doctors`, { params });
-                console.log('Dati della risposta:', response.data); // Aggiungi questo log per controllare la struttura dei dati
-                this.doctors = response.data; // Se response.data è l'intero oggetto, assegnalo a this.doctors
-                this.filteredDoctors = response.data || []; // Verifica se è un array di medici
+                console.log('Dati della risposta:', response.data);
+
+                // Filtra i dottori in base al flag showOnlySponsored
+                if (this.showOnlySponsored) {
+                    // Mostra solo dottori con sponsorizzazioni non "None"
+                    this.filteredDoctors = response.data.filter(doctor => {
+                        return doctor.sponsorships.length > 0 && doctor.sponsorships[0].name !== 'None';
+                    });
+                } else {
+                    // Mostra tutti i dottori
+                    this.filteredDoctors = response.data;
+                }
+
             } catch (error) {
                 console.error('Errore:', error);
                 this.error = 'Errore nel recupero dei dati.';
@@ -139,27 +152,31 @@ export default {
                 this.error = 'Errore nel recupero delle specializzazioni.';
             }
         },
+
         filterDoctorsBySpecialization() {
             if (this.selectedSpecializations.length > 0) {
-                this.filteredDoctors = this.doctors.data.filter(doctor =>
+                this.filteredDoctors = this.doctors.filter(doctor =>
                     doctor.specializations && doctor.specializations.some(specialization =>
                         this.selectedSpecializations.includes(specialization.name)
                     )
                 );
             } else {
-                this.filteredDoctors = this.doctors.data;
+                this.filteredDoctors = this.doctors;
             }
         },
+
         async loadMore() {
             this.page++;
             await this.fetchDoctors();
         },
+
         async loadPrev() {
             if (this.page > 1) {
                 this.page--;
                 await this.fetchDoctors();
             }
         },
+
         handleSearch() {
             const params = new URLSearchParams();
             this.selectedSpecializations.forEach(specialization => {
@@ -175,27 +192,30 @@ export default {
                 console.error('Errore nel reindirizzamento:', err);
             });
 
-            this.filterDoctorsBySpecialization(); // Aggiungi questa chiamata
+            this.filterDoctorsBySpecialization();
         },
+
         handleKeypress(event) {
             if (event.key === 'Enter') {
                 this.handleSearch();
             }
         },
+
         goToDoctorDetail(doctor) {
-            console.log(doctor)
             this.$router.push({ name: 'doctorDetail', params: { slug: doctor } });
         },
-        // lo script serve perché ogni utente ha la foto, anche se poi non esiste come file
+
         handleImageError(event) {
             event.target.src = 'https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg';
-        },
+        }
     },
     mounted() {
         document.title = 'Lista dei Dottori';
     }
 };
 </script>
+
+
 
 <style scoped>
 .img-fluid {
