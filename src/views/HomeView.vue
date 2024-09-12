@@ -5,7 +5,7 @@
         </div>
 
         <!-- Jumbotron per le Specializzazioni -->
-        <div class="container mb-4 text-dark jumbotron p-4">
+        <div class="container mb-4 text-dark jumbotron p-4 shadow">
             <h3 class="mb-3">Filtra per Specializzazioni</h3>
             <div class="specializations-container">
                 <div class="row">
@@ -24,9 +24,9 @@
         <div class="container" v-if="loading">Caricamento...</div>
         <div class="container" v-else-if="error">Errore: {{ error }}</div>
         <div v-else class="container-fluid bg-white py-4">
-            <div class="container">
+            <div class="container-sm">
                 <div class="row text-dark">
-                    <div class="col-12 col-md-6 col-lg-4 py-2" v-for="doctor in filteredDoctors" :key="doctor.id">
+                    <div class="col-12 col-md-6 col-lg-4 py-2 mb-4" v-for="doctor in filteredDoctors" :key="doctor.id">
                         <div class="border p-3 bg-light rounded d-flex flex-column h-100 justify-content-between">
                             <div class="d-flex justify-content-center mb-3 position-relative">
                                 <img v-if="doctor.pic" :src="`${base_url}/storage/images/${doctor.pic}`"
@@ -202,6 +202,10 @@ export default {
         },
 
         goToDoctorDetail(doctor) {
+            // console.log(doctor)
+            // this.$router.push({ name: 'doctorDetail', params: { slug: doctor } });
+            const slug = doctor.toLowerCase(); // Converti lo slug in minuscolo
+            this.$router.push({ name: 'doctorDetail', params: { slug } });
             this.$router.push({ name: 'doctorDetail', params: { slug: doctor } });
         },
 

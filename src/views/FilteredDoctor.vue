@@ -14,7 +14,7 @@
 
             <!-- Visualizza i dettagli del dottore -->
             <div>
-                <div class="container">
+                <div class="container-sm">
                     <div class="row text-dark">
                         <div class="col-12 col-md-6 col-lg-4 py-2" v-for="doctor in filteredDoctors" :key="doctor.id">
                             <div class="border p-3 bg-light rounded d-flex flex-column h-100 justify-content-between">
