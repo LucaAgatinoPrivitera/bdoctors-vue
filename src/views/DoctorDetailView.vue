@@ -24,6 +24,9 @@ export default {
                 review_text: '',
                 doctor_id: ''
             },
+
+            snackbar: false,
+            snackbarText: '',
             
         };
     },
@@ -48,11 +51,10 @@ export default {
         },
         async submitReview() {
             this.reviewForm.doctor_id = this.doctor.id;
-            
-            
             try {
                 await axios.post(`${this.base_url}/api/reviews`, this.reviewForm);
-                
+                this.snackbarText = "Recensione inviata con successo!";
+                this.snackbar = true;
                 this.showReviewForm = false;
                  // Reset del form dopo l'invio
                 this.reviewForm = {
@@ -62,17 +64,22 @@ export default {
                     review_text: '',
                     doctor_id: ''
                 };
-                
+
+                setTimeout(() => {
+                  this.snackbar = false;
+                }, 3000);
 
             } catch (error) {
-                console.error('Errore:', error);
+              this.snackbarText = "Errore durante l'invio della recensione.";
+              this.snackbar = true;
             }
         },
         async sendMessage() {
             this.contactForm.doctor_id = this.doctor.id;
             try {
                 await axios.post(`${this.base_url}/api/messages`, this.contactForm);
-                
+                this.snackbarText = "Messaggio inviato con successo!";
+                this.snackbar = true;
                 this.showContactForm = false;
                 // Reset del form dopo l'invio
                 this.contactForm = {
@@ -81,6 +88,10 @@ export default {
                   message: '',
                   doctor_id: ''
                 };
+
+                setTimeout(() => {
+                  this.snackbar = false;
+                }, 3000);
                 
             } catch (error) {
                 console.error('Errore:', error);
@@ -181,6 +192,10 @@ export default {
         </div>
         <router-link class="back-home btn btn-outline-light mt-3" to="/">Torna alla home</router-link>
     </div>
+    <v-snackbar v-model="snackbar" :timeout="3000" class="custom-snackbar">
+    {{ snackbarText }}
+    </v-snackbar>
+
 </template>
 
 <style scoped>
@@ -258,6 +273,13 @@ export default {
     border-radius: 5px;
     margin-bottom: 10px;
 }
+
+.custom-snackbar {
+  background-color: #007bff; /* Cambia il colore di sfondo */
+  color: white; /* Cambia il colore del testo */
+  font-weight: bold; /* Rende il testo più evidente */
+}
+
 
 
 @media (max-width: 768px) {
