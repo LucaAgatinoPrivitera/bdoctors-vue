@@ -33,7 +33,8 @@ export default {
     },
     methods: {
         async fetchDoctor() {
-            const slug = this.$route.params.slug;
+            // const slug = this.$route.params.slug;
+            const slug = this.$route.params.slug.toLowerCase();
             try {
                 const response = await axios.get(`${this.base_url}/api/doctors/${slug}`);
                 this.doctor = response.data;

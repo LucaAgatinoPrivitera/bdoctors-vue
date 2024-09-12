@@ -183,8 +183,10 @@ export default {
             }
         },
         goToDoctorDetail(doctor) {
-            console.log(doctor)
-            this.$router.push({ name: 'doctorDetail', params: { slug: doctor } });
+            // console.log(doctor)
+            // this.$router.push({ name: 'doctorDetail', params: { slug: doctor } });
+            const slug = doctor.toLowerCase(); // Converti lo slug in minuscolo
+            this.$router.push({ name: 'doctorDetail', params: { slug } });
         },
         // lo script serve perché ogni utente ha la foto, anche se poi non esiste come file
         handleImageError(event) {
