@@ -4,28 +4,21 @@
             <h2 class="container text-success">Lista dei Dottori</h2>
         </div>
 
-        <div class="container mb-4 text-dark">
-            <h3>
-                <button class="btn btn-secondary" @click="toggleSpecializations">
-                    {{ showSpecializations ? 'Nascondi specializzazioni' : 'Filtra specializzazioni' }}
-                </button>
-            </h3>
-
-            <transition @before-enter="beforeEnter" @enter="enter" @leave="leave" name="slide-fade">
-                <div v-if="showSpecializations" class="specializations-container">
-                    <div class="row">
-                        <div class="col-md-4 mb-3" v-for="specialization in specializations" :key="specialization.id">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" :id="specialization.id"
-                                    :value="specialization.name" v-model="selectedSpecializations" />
-                                <label class="form-check-label"
-                                    :for="specialization.id">{{ specialization.name }}</label>
-                            </div>
+        <!-- Jumbotron per le Specializzazioni -->
+        <div class="container mb-4 text-dark jumbotron p-4">
+            <h3 class="mb-3">Filtra per Specializzazioni</h3>
+            <div class="specializations-container">
+                <div class="row">
+                    <div class="col-md-4 mb-3" v-for="specialization in specializations" :key="specialization.id">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" :id="specialization.id"
+                                :value="specialization.name" v-model="selectedSpecializations" />
+                            <label class="form-check-label" :for="specialization.id">{{ specialization.name }}</label>
                         </div>
                     </div>
-                    <button class="btn btn-primary mt-3" @click="handleSearch">Filtra</button>
                 </div>
-            </transition>
+            </div>
+            <button class="btn btn-primary mt-3" @click="handleSearch">Filtra</button>
         </div>
 
         <div class="container" v-if="loading">Caricamento...</div>
@@ -113,7 +106,7 @@ export default {
             page: 1,
             perPage: 10,
             searchQuery: '',
-            showSpecializations: false // Variabile per gestire la visibilità delle specializzazioni
+            showSpecializations: true // Imposta a true per mostrare subito le specializzazioni
         };
     },
     async created() {
@@ -121,56 +114,6 @@ export default {
         await this.fetchSpecializations(); // Carica le specializzazioni quando il componente viene creato
     },
     methods: {
-        beforeEnter(el) {
-            el.style.height = '0';
-            el.style.opacity = '0';
-        },
-        enter(el, done) {
-            const height = el.scrollHeight; // Otteniamo l'altezza dinamica
-            el.style.height = height + 'px';
-            el.style.opacity = '1';
-            el.addEventListener('transitionend', done); // Quando l'animazione termina, chiamiamo done()
-        },
-        leave(el, done) {
-            el.style.height = el.scrollHeight + 'px'; // Iniziamo con l'altezza corrente
-            el.style.opacity = '1';
-            requestAnimationFrame(() => {
-                // Attiviamo la transizione
-                el.style.transition = 'height 0.5s ease, opacity 0.5s ease';
-                el.style.height = '0';
-                el.style.opacity = '0';
-                el.addEventListener('transitionend', done); // Quando la transizione finisce, chiamiamo done()
-            });
-        },
-        // async fetchDoctors() {
-        //     const params = new URLSearchParams(this.$route.query);
-        //     try {
-        //         const response = await axios.get(`${this.base_url}/api/doctors`, { params });
-        //         console.log('Dati dei dottori:', response.data.data); // Log dei dati dei dottori
-        //         this.filteredDoctors = response.data.data || [];
-        //     } catch (error) {
-        //         console.error('Errore:', error);
-        //         this.error = 'Errore nel recupero dei dati.';
-        //     } finally {
-        //         this.loading = false;
-        //     }
-        // },
-
-
-        // async fetchDoctors() {
-        //     const params = new URLSearchParams(this.$route.query);
-        //     try {
-        //         const response = await axios.get(`${this.base_url}/api/doctors`, { params });
-        //         console.log('Dati della risposta:', response.data); // Aggiungi questo log
-        //         this.filteredDoctors = response.data || [];
-        //     } catch (error) {
-        //         console.error('Errore:', error);
-        //         this.error = 'Errore nel recupero dei dati.';
-        //     } finally {
-        //         this.loading = false;
-        //     }
-        // },
-
         async fetchDoctors() {
             const params = new URLSearchParams(this.$route.query);
             try {
@@ -184,9 +127,7 @@ export default {
             } finally {
                 this.loading = false;
             }
-        }
-        ,
-
+        },
 
         async fetchSpecializations() {
             try {
@@ -197,9 +138,6 @@ export default {
                 console.error('Errore nel recupero delle specializzazioni:', error);
                 this.error = 'Errore nel recupero delle specializzazioni.';
             }
-        },
-        toggleSpecializations() {
-            this.showSpecializations = !this.showSpecializations;
         },
         filterDoctorsBySpecialization() {
             if (this.selectedSpecializations.length > 0) {
@@ -238,8 +176,7 @@ export default {
             });
 
             this.filterDoctorsBySpecialization(); // Aggiungi questa chiamata
-        }
-        ,
+        },
         handleKeypress(event) {
             if (event.key === 'Enter') {
                 this.handleSearch();
@@ -258,13 +195,19 @@ export default {
         document.title = 'Lista dei Dottori';
     }
 };
-
 </script>
 
 <style scoped>
 .img-fluid {
     max-width: 100%;
     height: auto;
+}
+
+.jumbotron {
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .btn-secondary {
