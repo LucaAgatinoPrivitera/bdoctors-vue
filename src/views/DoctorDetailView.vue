@@ -24,8 +24,7 @@ export default {
                 review_text: '',
                 doctor_id: ''
             },
-            contactSuccessMessage: '',
-            reviewSuccessMessage: ''
+            
         };
     },
     async created() {
@@ -49,11 +48,11 @@ export default {
         },
         async submitReview() {
             this.reviewForm.doctor_id = this.doctor.id;
-            this.reviewSuccessMessage = 'Recensione inviata con successo!';
-            this.showReviewForm = false;
+            
+            
             try {
                 await axios.post(`${this.base_url}/api/reviews`, this.reviewForm);
-                this.reviewSuccessMessage = 'Recensione inviata con successo!';
+                
                 this.showReviewForm = false;
                  // Reset del form dopo l'invio
                 this.reviewForm = {
@@ -63,9 +62,7 @@ export default {
                     review_text: '',
                     doctor_id: ''
                 };
-                setTimeout(() => {
-                  this.reviewSuccessMessage = '';
-                }, 1500);
+                
 
             } catch (error) {
                 console.error('Errore:', error);
@@ -75,7 +72,7 @@ export default {
             this.contactForm.doctor_id = this.doctor.id;
             try {
                 await axios.post(`${this.base_url}/api/messages`, this.contactForm);
-                this.contactSuccessMessage = 'Messaggio inviato con successo!';
+                
                 this.showContactForm = false;
                 // Reset del form dopo l'invio
                 this.contactForm = {
@@ -84,9 +81,7 @@ export default {
                   message: '',
                   doctor_id: ''
                 };
-                setTimeout(() => {
-                  this.contactSuccessMessage = '';
-                }, 1500);
+                
             } catch (error) {
                 console.error('Errore:', error);
             }
@@ -133,8 +128,7 @@ export default {
             <div v-if="showContactForm" class="contact-container mt-4">
                 <div class="contact-content">
                     <h2>Contatta il Medico</h2>
-                    <!-- Success Message -->
-                    <p v-if="contactSuccessMessage" class="alert alert-success">{{ contactSuccessMessage }}</p>
+                   
                     <form @submit.prevent="sendMessage" class="contact-form">
                         
                         <div class="mb-3">
@@ -160,8 +154,7 @@ export default {
                 <div class="form-wrapper">
                     <h2>Lascia una Recensione</h2>
                     <form @submit.prevent="submitReview">
-                         <!-- Success Message -->
-                        <p v-if="reviewSuccessMessage" class="alert alert-success">{{ reviewSuccessMessage }}</p>
+                         
                         <div class="mb-3">
                             <label for="name" class="form-label">Nome</label>
                             <input type="text" id="name" v-model="reviewForm.name_reviewer" class="form-control" required />
