@@ -112,9 +112,10 @@ export default {
         </div>
         <div v-else class="doctor-card bg-dark p-4 rounded shadow">
             <h1 class="doctor-name display-4 text-info">{{ doctor.surname }}</h1>
+            <p class="doctor-name display-4 text-info">{{ doctor.user.name }}</p>
             <div class="doctor-info d-flex align-items-center my-4">
                 <img v-if="doctor.pic" :src="`${base_url}/storage/images/${doctor.pic}`" alt="Immagine del dottore"
-                    class="img-fluid me-2 rounded-circle" style="width: 200px;" @error="handleImageError" />
+                    class="img-fluid me-2" style="width: 200px; border-radius: 20px;" @error="handleImageError" />
                 <img v-else src="https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg"
                     alt="Immagine del dottore" class="img-fluid me-2 rounded-circle" style="width: 200px;" />
                 <div>
