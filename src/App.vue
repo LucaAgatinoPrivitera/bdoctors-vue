@@ -12,17 +12,11 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <router-link class="nav-link text-light" to="/login">Accedi</router-link>
+                <router-link class="nav-link text-light" to="/">Dottori</router-link>
               </li>
-              <li class="nav-item">
-                <router-link class="nav-link text-light" to="/register">Registrati</router-link>
-              </li>
-              <li class="nav-item">
-                <router-link class="nav-link text-light" to="/">Home</router-link>
-              </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <router-link class="nav-link text-light" to="/doctors">Dottori</router-link>
-              </li>
+              </li> -->
               <!-- Aggiungi altre voci se necessario -->
             </ul>
           </div>
