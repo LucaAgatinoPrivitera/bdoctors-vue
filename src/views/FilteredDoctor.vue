@@ -3,7 +3,7 @@
         <div class="position-relative container d-flex">
             <button class="btn btn-secondary">
                 <router-link class="text-decoration-none text-light" to="/">
-                    <i class="fa-solid fa-arrow-left"></i>
+                    <i class="fa fa-arrow-left"></i>
                 </router-link>
             </button>
             <h2 class="text-success container my-0">
