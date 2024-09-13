@@ -6,19 +6,55 @@
 
         <!-- Jumbotron per le Specializzazioni -->
         <div class="container mb-4 text-dark jumbotron p-4 shadow">
-            <h3 class="mb-3">Filtra per Specializzazioni</h3>
-            <div class="specializations-container">
-                <div class="row">
-                    <div class="col-md-4 mb-3" v-for="specialization in specializations" :key="specialization.id">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" :id="specialization.id"
-                                :value="specialization.name" v-model="selectedSpecializations" />
-                            <label class="form-check-label" :for="specialization.id">{{ specialization.name }}</label>
+            <h3 class="mb-3">Filtra per Specializzazioni Voti e Recensioni</h3>
+            <div class="search-container">
+                <!-- Lista delle Specializzazioni -->
+                <div class="col-md-12 mb-3">
+                    <div class="specializations-list">
+                        <span v-for="specialization in specializations" :key="specialization.id" 
+                            :class="{
+                                'badge-specialization': true,
+                                'gold': specialization.level === 'Gold',
+                                'premium': specialization.level === 'Premium',
+                                'basic': specialization.level === 'Basic',
+                                'selected': selectedSpecializations.includes(specialization.name)
+                            }"
+                            @click="toggleSpecialization(specialization.name)">
+                            {{ specialization.name }}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Input per il numero minimo e massimo di voti -->
+                <div class="col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="min-votes">Numero Minimo di Voti:</label>
+                            <input type="number" id="min-votes" v-model.number="minVotes" class="form-control" placeholder="Minimo Voti" />
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="max-votes">Numero Massimo di Voti:</label>
+                            <input type="number" id="max-votes" v-model.number="maxVotes" class="form-control" placeholder="Massimo Voti" />
                         </div>
                     </div>
                 </div>
+
+                <!-- Input per il numero minimo e massimo di recensioni -->
+                <div class="col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="min-reviews">Numero Minimo di Recensioni:</label>
+                            <input type="number" id="min-reviews" v-model.number="minReviews" class="form-control" placeholder="Minimo Recensioni" />
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="max-reviews">Numero Massimo di Recensioni:</label>
+                            <input type="number" id="max-reviews" v-model.number="maxReviews" class="form-control" placeholder="Massimo Recensioni" />
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary mt-3" @click="handleSearch">Filtra</button>
             </div>
-            <button class="btn btn-primary mt-3" @click="handleSearch">Filtra</button>
         </div>
 
         <div class="container" v-if="loading">Caricamento...</div>
@@ -34,42 +70,50 @@
                                 <img v-else
                                     src="https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg"
                                     alt="Immagine del dottore" class="img-fluid" />
-                                <p v-if="doctor.sponsorships[0]?.name == 'Gold'"
+                                <p v-if="doctor.sponsorships[0]?.name === 'Gold'"
                                     class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor gold p-2 rounded-pill">
-                                    Sponsorizzato
-                                    {{ doctor.sponsorships[0]?.name }}</p>
+                                    Sponsorizzato {{ doctor.sponsorships[0]?.name }}</p>
 
-                                <p v-if="doctor.sponsorships[0]?.name == 'Premium'"
+                                <p v-if="doctor.sponsorships[0]?.name === 'Premium'"
                                     class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor premium p-2 rounded-pill">
-                                    Sponsorizzato
-                                    {{ doctor.sponsorships[0]?.name }}</p>
+                                    Sponsorizzato {{ doctor.sponsorships[0]?.name }}</p>
 
-                                <p v-if="doctor.sponsorships[0]?.name == 'Basic'"
+                                <p v-if="doctor.sponsorships[0]?.name === 'Basic'"
                                     class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor basic p-2 rounded-pill text-light">
-                                    Sponsorizzato
-                                    {{ doctor.sponsorships[0]?.name }}</p>
-
+                                    Sponsorizzato {{ doctor.sponsorships[0]?.name }}</p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h2>{{ doctor.surname }}</h2>
-                                <!-- <p class="d-flex align-items-center m-0 p-0 text-center">Sponsorizzato
-                                    {{ doctor.sponsorships[0]?.name }}</p> -->
                             </div>
 
                             <p>Indirizzo: {{ doctor.address }}</p>
                             <p>Telefono: {{ doctor.phone }}</p>
                             <p>Bio: {{ doctor.bio }}</p>
 
-                            <h3>Specializzazioni:
-                            </h3>
+                            <h3>Specializzazioni:</h3>
                             <div v-if="doctor.specializations.length === 0">
                                 <p>Nessuna specializzazione</p>
                             </div>
                             <ul v-else>
-                                <li v-for="specialization in doctor.specializations" :key="specialization.id">
+                                <li v-for="specialization in doctor.specializations" :key="specialization.id" 
+                                    :class="{
+                                        'gold': specialization.level === 'Gold',
+                                        'premium': specialization.level === 'Premium',
+                                        'basic': specialization.level === 'Basic'
+                                    }">
                                     {{ specialization.name }}
                                 </li>
                             </ul>
+                            
+                            <!-- Visualizza i cerchi colorati per le stelle -->
+                            <h3>Valutazione Media:</h3>
+                            <div class="stars">
+                                <span v-for="index in 5" :key="index" class="star-circle"
+                                    :class="getStarClass(index, doctor.reviews_avg_stars)">
+                                </span>
+                            </div>
+                            <p>{{ doctor.reviews_avg_stars !== null ? parseFloat(doctor.reviews_avg_stars).toFixed(1) : 'Nessuna recensione' }} su 5</p>
+
                             <button class="btn btn-info mt-2" @click="goToDoctorDetail(doctor.slug)">
                                 Visualizza Dettagli
                             </button>
@@ -89,6 +133,7 @@
         </div>
     </div>
 </template>
+
 
 <script>
 import axios from 'axios';
@@ -115,23 +160,24 @@ export default {
         await this.fetchDoctors();
         await this.fetchSpecializations();
     },
-    methods: {
 
+    methods: {
         async fetchDoctors() {
             const params = new URLSearchParams(this.$route.query);
             try {
                 const response = await axios.get(`${this.base_url}/api/doctors`, { params });
                 console.log('Dati della risposta:', response.data);
 
+                this.doctors = response.data;
                 // Filtra i dottori in base al flag showOnlySponsored
                 if (this.showOnlySponsored) {
                     // Mostra solo dottori con sponsorizzazioni non "None"
-                    this.filteredDoctors = response.data.filter(doctor => {
+                    this.filteredDoctors = this.doctors.filter(doctor => {
                         return doctor.sponsorships.length > 0 && doctor.sponsorships[0].name !== 'None';
                     });
                 } else {
                     // Mostra tutti i dottori
-                    this.filteredDoctors = response.data;
+                    this.filteredDoctors = this.doctors;
                 }
 
             } catch (error) {
@@ -201,23 +247,37 @@ export default {
             }
         },
 
-        goToDoctorDetail(doctor) {
-            // console.log(doctor)
-            // this.$router.push({ name: 'doctorDetail', params: { slug: doctor } });
-            const slug = doctor.toLowerCase(); // Converti lo slug in minuscolo
+        goToDoctorDetail(slug) {
             this.$router.push({ name: 'doctorDetail', params: { slug } });
-            this.$router.push({ name: 'doctorDetail', params: { slug: doctor } });
         },
 
         handleImageError(event) {
             event.target.src = 'https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg';
+        },
+
+        getStarClass(index, rating) {
+            if (rating === null) return 'star-circle grey'; // Nessuna recensione
+            return index <= Math.round(rating) ? 'star-circle filled' : 'star-circle empty';
+        },
+
+        toggleSpecialization(name) {
+            const index = this.selectedSpecializations.indexOf(name);
+            if (index === -1) {
+                this.selectedSpecializations.push(name);
+            } else {
+                this.selectedSpecializations.splice(index, 1);
+            }
+            this.filterDoctorsBySpecialization();
         }
     },
+
     mounted() {
         document.title = 'Lista dei Dottori';
     }
 };
 </script>
+
+
 
 
 
@@ -238,18 +298,69 @@ export default {
     margin: 0.5rem;
 }
 
-.specializations-container {
-    overflow: hidden;
+.search-container {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.slide-fade-enter-active,
-.slide-fade-leave-active {
-    transition: all 0.5s ease;
+.specializations-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
-.slide-fade-enter,
-.slide-fade-leave-to {
-    opacity: 0;
+.badge-specialization {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.badge-specialization.gold {
+    background-color: #FFD700;
+    color: #000;
+}
+
+.badge-specialization.premium {
+    background-color: #D7DEDC;
+    color: #000;
+}
+
+.badge-specialization.basic {
+    background-color: #0A8754;
+    color: #fff;
+}
+
+.badge-specialization.selected {
+    border: 2px solid #000;
+}
+
+.stars {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.star-circle {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.star-circle.filled {
+    background-color: #f39c12; /* Colore giallo per i cerchi riempiti */
+}
+
+.star-circle.empty {
+    background-color: #ddd; /* Colore grigio per i cerchi vuoti */
+}
+
+.star-circle.grey {
+    background-color: #ccc; /* Colore grigio per nessuna recensione */
 }
 
 .sponsor {
