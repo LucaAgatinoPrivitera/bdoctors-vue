@@ -1,6 +1,8 @@
 <template>
     <div class="container-fluid m-0 p-0 pt-2 bg-white altezza">
         <div class="position-relative container d-flex">
+            <button class="btn btn-secondary"><router-link class="text-decoration-none text-light " to="/"><i
+                        class="fa fa-arrow-left"></i></router-link>
             <button class="btn btn-secondary">
                 <router-link class="text-decoration-none text-light" to="/">
                     <i class="fa-solid fa-arrow-left"></i>
