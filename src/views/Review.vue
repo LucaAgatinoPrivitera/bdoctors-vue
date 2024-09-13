@@ -1,7 +1,7 @@
 <template>
     <div class="review-container">
         <div class="form-wrapper">
-            <button class="btn btn-secondary position-absolute " @click="goBackToDoctor"><i class="fa-solid fa-arrow-left"></i></button>
+            <button class="btn btn-secondary position-absolute " @click="goBackToDoctor"><i class="fa fa-arrow-left"></i></button>
             <h1>Lascia una Recensione</h1>
 
             <!-- Messaggio di successo -->

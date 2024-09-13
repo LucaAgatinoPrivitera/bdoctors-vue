@@ -2,7 +2,7 @@
     <div class="container-fluid m-0 p-0 pt-2 bg-white altezza">
         <div class="position-relative container d-flex">
             <button class="btn btn-secondary"><router-link class="text-decoration-none text-light " to="/"><i
-                        class="fa-solid fa-arrow-left"></i></router-link>
+                        class="fa fa-arrow-left"></i></router-link>
             </button>
             <h2 class="text-success container my-0">Risultati della Ricerca per {{ specialization }} :
                 {{ filteredDoctors.length }} </h2>
