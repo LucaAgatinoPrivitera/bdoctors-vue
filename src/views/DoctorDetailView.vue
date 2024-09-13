@@ -103,16 +103,24 @@ export default {
 </script>
 
 <template>
-    <div class="doctor-detail container text-light p-4">
+    <div class="container-fluid bg-white p-4 min-height">
         <div v-if="loading" class="text-center">
             <p class="loading-message">Caricamento...</p>
         </div>
         <div v-else-if="error" class="text-center text-danger">
             <p>Errore: {{ error }}</p>
         </div>
-        <div v-else class="doctor-card bg-dark p-4 rounded shadow">
-            <h1 class="doctor-name display-4 text-info">{{ doctor.surname }}</h1>
-            <p class="doctor-name display-4 text-info">{{ doctor.user.name }}</p>
+        <div v-else class="container text-dark p-4 rounded shadow">
+
+            <div class="d-flex align-items-center gap-4">
+                <button class="btn btn-secondary">
+                    <i class="fa fa-arrow-left" @click="$router.go(-1)"></i>
+                </button>
+
+                <h1 class="doctor-name display-4 text-info">{{ doctor.surname + ' ' + doctor.user.name }}</h1>
+            </div>
+
+
             <div class="doctor-info d-flex align-items-center my-4">
                 <img v-if="doctor.pic" :src="`${base_url}/storage/images/${doctor.pic}`" alt="Immagine del dottore"
                     class="img-fluid me-2" style="width: 200px; border-radius: 20px;" @error="handleImageError" />
@@ -217,9 +225,21 @@ export default {
 </template>
 
 <style scoped>
+h1 {
+    color: #008080 !important;
+}
+
+h3 {
+    color: #613719 !important;
+}
+
 .doctor-detail {
     max-width: 900px;
     margin: 0 auto;
+}
+
+.min-height {
+    min-height: 80vh;
 }
 
 .review-container,
