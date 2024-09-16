@@ -4,7 +4,7 @@
       <div class="position-relative">
         <h1>Contatta il Medico</h1>
         <button class="btn btn-secondary position-absolute top-0" @click="goBackToDoctor"><i
-            class="fa-solid fa-arrow-left"></i></button>
+            class="fa fa-arrow-left"></i></button>
       </div>
 
       <div v-if="successMessage" class="alert alert-success" role="alert">
