@@ -220,7 +220,7 @@ export default {
                 </div>
             </div>
         </div>
-        <router-link class="back-home btn btn-outline-light mt-3" to="/">Torna alla home</router-link>
+        <router-link class="back-home btn btn-outline-light mt-3 text-dark" to="/">Torna alla home</router-link>
         <v-snackbar v-model="snackbar" :timeout="3000" class="custom-snackbar">
             {{ snackbarText }}
         </v-snackbar>
