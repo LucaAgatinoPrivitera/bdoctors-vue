@@ -11,49 +11,51 @@
                 <!-- Lista delle Specializzazioni -->
                 <div class="col-md-12 mb-3">
                     <div class="specializations-list">
-                        <span v-for="specialization in specializations" :key="specialization.id" 
-                            :class="{
-                                'badge-specialization': true,
-                                'gold': specialization.level === 'Gold',
-                                'premium': specialization.level === 'Premium',
-                                'basic': specialization.level === 'Basic',
-                                'selected': selectedSpecializations.includes(specialization.name)
-                            }"
-                            @click="toggleSpecialization(specialization.name)">
+                        <span v-for="specialization in specializations" :key="specialization.id" :class="{
+                            'badge-specialization': true,
+                            'gold': specialization.level === 'Gold',
+                            'premium': specialization.level === 'Premium',
+                            'basic': specialization.level === 'Basic',
+                            'selected': selectedSpecializations.includes(specialization.name)
+                        }" @click="handleSearch(specialization)">
                             {{ specialization.name }}
                         </span>
                     </div>
                 </div>
 
                 <!-- Input per il numero minimo e massimo di voti -->
-                <div class="col-md-6 mb-3">
+                <!-- <div class="col-md-6 mb-3">
                     <div class="row">
                         <div class="col-6 mb-3">
                             <label for="min-votes">Numero Minimo di Voti:</label>
-                            <input type="number" id="min-votes" v-model.number="minVotes" class="form-control" placeholder="Minimo Voti" />
+                            <input type="number" id="min-votes" v-model.number="minVotes" class="form-control"
+                                placeholder="Minimo Voti" />
                         </div>
                         <div class="col-6 mb-3">
                             <label for="max-votes">Numero Massimo di Voti:</label>
-                            <input type="number" id="max-votes" v-model.number="maxVotes" class="form-control" placeholder="Massimo Voti" />
+                            <input type="number" id="max-votes" v-model.number="maxVotes" class="form-control"
+                                placeholder="Massimo Voti" />
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Input per il numero minimo e massimo di recensioni -->
-                <div class="col-md-6 mb-3">
+                <!-- <div class="col-md-6 mb-3">
                     <div class="row">
                         <div class="col-6 mb-3">
                             <label for="min-reviews">Numero Minimo di Recensioni:</label>
-                            <input type="number" id="min-reviews" v-model.number="minReviews" class="form-control" placeholder="Minimo Recensioni" />
+                            <input type="number" id="min-reviews" v-model.number="minReviews" class="form-control"
+                                placeholder="Minimo Recensioni" />
                         </div>
                         <div class="col-6 mb-3">
                             <label for="max-reviews">Numero Massimo di Recensioni:</label>
-                            <input type="number" id="max-reviews" v-model.number="maxReviews" class="form-control" placeholder="Massimo Recensioni" />
+                            <input type="number" id="max-reviews" v-model.number="maxReviews" class="form-control"
+                                placeholder="Massimo Recensioni" />
                         </div>
                     </div>
                 </div>
 
-                <button class="btn btn-primary mt-3" @click="handleSearch">Filtra</button>
+                <button class="btn btn-primary mt-3" @click="handleSearch">Filtra</button> -->
             </div>
         </div>
 
@@ -71,16 +73,16 @@
                                     src="https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg"
                                     alt="Immagine del dottore" class="img-fluid" />
                                 <p v-if="doctor.sponsorships[0]?.name === 'Gold'"
-                                    class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor gold p-2 rounded-pill">
-                                    Sponsorizzato {{ doctor.sponsorships[0]?.name }}</p>
+                                    class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor premium p-2 rounded-pill">
+                                    Sponsorizzato</p>
 
                                 <p v-if="doctor.sponsorships[0]?.name === 'Premium'"
                                     class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor premium p-2 rounded-pill">
-                                    Sponsorizzato {{ doctor.sponsorships[0]?.name }}</p>
+                                    Sponsorizzato</p>
 
                                 <p v-if="doctor.sponsorships[0]?.name === 'Basic'"
-                                    class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor basic p-2 rounded-pill text-light">
-                                    Sponsorizzato {{ doctor.sponsorships[0]?.name }}</p>
+                                    class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor premium p-2 rounded-pill text-light">
+                                    Sponsorizzato</p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h2>{{ doctor.surname }}</h2>
@@ -95,24 +97,25 @@
                                 <p>Nessuna specializzazione</p>
                             </div>
                             <ul v-else>
-                                <li v-for="specialization in doctor.specializations" :key="specialization.id" 
-                                    :class="{
-                                        'gold': specialization.level === 'Gold',
-                                        'premium': specialization.level === 'Premium',
-                                        'basic': specialization.level === 'Basic'
-                                    }">
+                                <li v-for="specialization in doctor.specializations" :key="specialization.id" :class="{
+                                    'gold': specialization.level === 'Gold',
+                                    'premium': specialization.level === 'Premium',
+                                    'basic': specialization.level === 'Basic'
+                                }">
                                     {{ specialization.name }}
                                 </li>
                             </ul>
-                            
+
                             <!-- Visualizza i cerchi colorati per le stelle -->
                             <h3>Valutazione Media:</h3>
+                            <p>{{ doctor.reviews.stars }}</p>
                             <div class="stars">
                                 <span v-for="index in 5" :key="index" class="star-circle"
-                                    :class="getStarClass(index, doctor.reviews_avg_stars)">
+                                    :class="getStarClass(index, doctor.reviews.avg_stars)">
                                 </span>
                             </div>
-                            <p>{{ doctor.reviews_avg_stars !== null ? parseFloat(doctor.reviews_avg_stars).toFixed(1) : 'Nessuna recensione' }} su 5</p>
+                            <p>{{ doctor.reviews_avg_stars !== null ? parseFloat(doctor.reviews_avg_stars).toFixed(1) : 'Nessuna recensione' }}
+                                su 5</p>
 
                             <button class="btn btn-info mt-2" @click="goToDoctorDetail(doctor.slug)">
                                 Visualizza Dettagli
@@ -223,7 +226,18 @@ export default {
             }
         },
 
-        handleSearch() {
+        handleSearch(specialization) {
+            // Verifica se la specializzazione è già selezionata
+            const index = this.selectedSpecializations.indexOf(specialization.name);
+            if (index === -1) {
+                // Aggiungi la specializzazione se non è selezionata
+                this.selectedSpecializations.push(specialization.name);
+            } else {
+                // Rimuovi la specializzazione se è già selezionata (toggle)
+                this.selectedSpecializations.splice(index, 1);
+            }
+
+            // Aggiorna i parametri di ricerca nell'URL
             const params = new URLSearchParams();
             this.selectedSpecializations.forEach(specialization => {
                 params.append('specializations[]', specialization);
@@ -238,8 +252,10 @@ export default {
                 console.error('Errore nel reindirizzamento:', err);
             });
 
+            // Filtra i medici per specializzazione
             this.filterDoctorsBySpecialization();
-        },
+        }
+        ,
 
         handleKeypress(event) {
             if (event.key === 'Enter') {
@@ -352,15 +368,18 @@ export default {
 }
 
 .star-circle.filled {
-    background-color: #f39c12; /* Colore giallo per i cerchi riempiti */
+    background-color: #f39c12;
+    /* Colore giallo per i cerchi riempiti */
 }
 
 .star-circle.empty {
-    background-color: #ddd; /* Colore grigio per i cerchi vuoti */
+    background-color: #ddd;
+    /* Colore grigio per i cerchi vuoti */
 }
 
 .star-circle.grey {
-    background-color: #ccc; /* Colore grigio per nessuna recensione */
+    background-color: #ccc;
+    /* Colore grigio per nessuna recensione */
 }
 
 .sponsor {
@@ -381,4 +400,3 @@ export default {
     background-color: #0A8754;
 }
 </style>
-
