@@ -166,17 +166,17 @@
                                             src="https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg"
                                             alt="Immagine del dottore" class="img-fluid" />
                                         <p v-if="doctor.sponsorships[0]?.name == 'Gold'"
-                                            class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor premium p-2 rounded-pill">
+                                            class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor premium p-2 rounded-pill text-dark">
                                             Sponsorizzato
                                         </p>
 
                                         <p v-if="doctor.sponsorships[0]?.name == 'Premium'"
-                                            class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor premium p-2 rounded-pill">
+                                            class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor premium p-2 rounded-pill text-dark">
                                             Sponsorizzato
                                         </p>
 
                                         <p v-if="doctor.sponsorships[0]?.name == 'Basic'"
-                                            class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor premium p-2 rounded-pill text-light">
+                                            class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor premium p-2 rounded-pill text-light text-dark">
                                             Sponsorizzato
                                         </p>
                                     </div>
