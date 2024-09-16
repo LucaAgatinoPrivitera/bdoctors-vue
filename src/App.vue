@@ -2,8 +2,8 @@
   <div id="app">
     <!-- Header, Navbar, o altri componenti comuni possono andare qui -->
     <header>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+        <div class="container-fluid">
           <h1 class="m-0 p-0 text-light"><router-link class="text-decoration-none text-light " to="/">BDoctors</router-link></h1>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

@@ -217,10 +217,11 @@ export default {
             </div>
         </div>
         <router-link class="back-home btn btn-outline-light mt-3" to="/">Torna alla home</router-link>
-    </div>
-    <v-snackbar v-model="snackbar" :timeout="3000" class="custom-snackbar">
+        <v-snackbar v-model="snackbar" :timeout="3000" class="custom-snackbar">
         {{ snackbarText }}
     </v-snackbar>
+    </div>
+    
 
 </template>
 
@@ -315,12 +316,14 @@ h3 {
 }
 
 .custom-snackbar {
-    background-color: #007bff;
+    background-color: green;
     /* Cambia il colore di sfondo */
     color: white;
     /* Cambia il colore del testo */
     font-weight: bold;
     /* Rende il testo più evidente */
+    border-radius: 5px;
+    
 }
 
 
