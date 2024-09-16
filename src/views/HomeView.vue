@@ -4,8 +4,7 @@
         <div class="container-fluid px-0 mx-0 bg-banner">
 
 
-            <div
-                class="container bg-banner ps-4 text-white py-4 d-flex justify-content-between align-items-center">
+            <div class="container bg-banner ps-4 text-white py-4 d-flex justify-content-between align-items-center">
                 <div class="banner-content">
                     <h1 class="display-4">BDoctors</h1>
                     <p class="lead">Trova i migliori medici vicino a te, specializzati in vari campi della medicina.</p>
@@ -166,8 +165,20 @@
                                 </li>
                             </ul>
 
+                            <div v-if="doctor.reviews && doctor.reviews.length > 0">
+                                <!-- Ciclo per visualizzare le stelle -->
+                                <span v-for="n in doctor.reviews[0].stars" :key="n">
+                                    <i class="fa-solid fa-star text-warning"></i>
+                                </span>
+                                <!-- Mostra il numero di stelle -->
+                                <!-- {{ doctor.reviews[0].stars }} -->
+                            </div>
+                            <div v-else>
+                                Nessuna recensione disponibile
+                            </div>
+
                             <!-- Visualizza i cerchi colorati per le stelle -->
-                            <div class="review-stars">
+                            <!-- <div class="review-stars">
                                 <h3>Valutazione Media:</h3>
                                 <div v-if="doctor.reviews[0].stars">
                                     <span v-for="stella in doctor.reviews[0].stars"> <i
@@ -176,8 +187,9 @@
                                 <div v-else>
                                     <p>Nessuna recensione disponibile</p>
                                 </div>
+                            </div> -->
 
-                                <!-- <div v-if="doctor.reviews_avg_stars !== undefined && doctor.reviews_avg_stars !== null">
+                            <!-- <div v-if="doctor.reviews_avg_stars !== undefined && doctor.reviews_avg_stars !== null">
                                     <div>
                                         <i class="fa-solid fa-star" v-for="i in 5"
                                             :class="{ 'opacity-100': getRating(doctor.reviews_avg_stars) >= i - 1, 'opacity-50': getRating(doctor.reviews_avg_stars) < i - 1 }"></i>
@@ -185,7 +197,7 @@
                                     <p>{{ parseFloat(doctor.reviews_avg_stars).toFixed(1) }} su 5</p>
                                 </div> -->
 
-                            </div>
+
 
                             <button class="btn btn-info mt-2" @click="goToDoctorDetail(doctor.slug)">
                                 Visualizza Dettagli

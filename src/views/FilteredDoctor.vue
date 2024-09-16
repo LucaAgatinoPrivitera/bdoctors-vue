@@ -61,23 +61,23 @@
     </div>
 
 
-            <div class="container-fluid m-0 p-0 pt-2 bg-white altezza">
-                <div class="position-relative container d-flex">
-                    <button class="btn btn-secondary">
-                        <router-link class="text-decoration-none text-light" to="/">
-                            <i class="fa fa-arrow-left"></i>
-                        </router-link>
-                    </button>
-                    <h2 class="text-success container my-0">
-                        Risultati della Ricerca per {{ specialization }}: {{ filteredDoctors.length }}
-                    </h2>
-                </div>
+    <div class="container-fluid m-0 p-0 pt-2 bg-white altezza">
+        <div class="position-relative container d-flex">
+            <button class="btn btn-secondary">
+                <router-link class="text-decoration-none text-light" to="/">
+                    <i class="fa fa-arrow-left"></i>
+                </router-link>
+            </button>
+            <h2 class="text-success container my-0">
+                Risultati della Ricerca per {{ specialization }}: {{ filteredDoctors.length }}
+            </h2>
+        </div>
 
-                <div v-if="loading">Caricamento...</div>
-                <div v-else-if="error">Errore: {{ error }}</div>
-                <div v-else>
-                    <!-- Jumbotron per le Specializzazioni -->
-                    <!-- <div class="container my-4 text-dark jumbotron p-4 shadow">
+        <div v-if="loading">Caricamento...</div>
+        <div v-else-if="error">Errore: {{ error }}</div>
+        <div v-else>
+            <!-- Jumbotron per le Specializzazioni -->
+            <!-- <div class="container my-4 text-dark jumbotron p-4 shadow">
                 <h3 class="mb-3">Filtra per Specializzazioni</h3>
                 <div class="specializations-container">
                     <div class="row">
@@ -97,27 +97,27 @@
 
 
 
-                    <!-- Jumbotron per le Specializzazioni -->
-                    <div class="container mb-4 text-dark jumbotron p-4 shadow">
-                        <h3 class="mb-3">Filtra per Specializzazioni Voti e Recensioni</h3>
-                        <div class="search-container">
-                            <!-- Lista delle Specializzazioni -->
-                            <div class="col-md-12 mb-3">
-                                <div class="specializations-list">
-                                    <span v-for="specialization in specializations" :key="specialization.id" :class="{
-                                        'badge-specialization': true,
-                                        'gold': specialization.level === 'Gold',
-                                        'premium': specialization.level === 'Premium',
-                                        'basic': specialization.level === 'Basic',
-                                        'selected': selectedSpecializations.includes(specialization.name)
-                                    }" @click="handleSearch(specialization)">
-                                        {{ specialization.name }}
-                                    </span>
-                                </div>
-                            </div>
+            <!-- Jumbotron per le Specializzazioni -->
+            <div class="container mb-4 text-dark jumbotron p-4 shadow">
+                <h3 class="mb-3">Filtra per Specializzazioni Voti e Recensioni</h3>
+                <div class="search-container">
+                    <!-- Lista delle Specializzazioni -->
+                    <div class="col-md-12 mb-3">
+                        <div class="specializations-list">
+                            <span v-for="specialization in specializations" :key="specialization.id" :class="{
+                                'badge-specialization': true,
+                                'gold': specialization.level === 'Gold',
+                                'premium': specialization.level === 'Premium',
+                                'basic': specialization.level === 'Basic',
+                                'selected': selectedSpecializations.includes(specialization.name)
+                            }" @click="handleSearch(specialization)">
+                                {{ specialization.name }}
+                            </span>
+                        </div>
+                    </div>
 
-                            <!-- Input per il numero minimo e massimo di voti -->
-                            <!-- <div class="col-md-6 mb-3">
+                    <!-- Input per il numero minimo e massimo di voti -->
+                    <!-- <div class="col-md-6 mb-3">
                     <div class="row">
                         <div class="col-6 mb-3">
                             <label for="min-votes">Numero Minimo di Voti:</label>
@@ -132,8 +132,8 @@
                     </div>
                 </div> -->
 
-                            <!-- Input per il numero minimo e massimo di recensioni -->
-                            <!-- <div class="col-md-6 mb-3">
+                    <!-- Input per il numero minimo e massimo di recensioni -->
+                    <!-- <div class="col-md-6 mb-3">
                     <div class="row">
                         <div class="col-6 mb-3">
                             <label for="min-reviews">Numero Minimo di Recensioni:</label>
@@ -149,47 +149,57 @@
                 </div>
 
                 <button class="btn btn-primary mt-3" @click="handleSearch">Filtra</button> -->
-                        </div>
-                    </div>
+                </div>
+            </div>
 
-                    <!-- Visualizza i dettagli del dottore -->
-                    <div class="container-sm">
-                        <div class="row text-dark">
-                            <div class="col-12 col-md-6 col-lg-4 py-2" v-for="doctor in filteredDoctors"
-                                :key="doctor.id">
-                                <div
-                                    class="border p-3 bg-light rounded d-flex flex-column h-100 justify-content-between">
-                                    <div class="d-flex justify-content-center mb-3 position-relative">
-                                        <img v-if="doctor.pic" :src="`${base_url}/storage/images/${doctor.pic}`"
-                                            alt="Immagine del dottore" class="img-fluid" @error="handleImageError" />
-                                        <img v-else
-                                            src="https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg"
-                                            alt="Immagine del dottore" class="img-fluid" />
-                                        <p v-if="doctor.sponsorships[0]?.name == 'Gold'"
-                                            class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor premium p-2 rounded-pill text-dark">
-                                            Sponsorizzato
-                                        </p>
+            <!-- Visualizza i dettagli del dottore -->
+            <div class="container-sm">
+                <div class="row text-dark">
+                    <div class="col-12 col-md-6 col-lg-4 py-2" v-for="doctor in filteredDoctors" :key="doctor.id">
+                        <div class="border p-3 bg-light rounded d-flex flex-column h-100 justify-content-between">
+                            <div class="d-flex justify-content-center mb-3 position-relative">
+                                <img v-if="doctor.pic" :src="`${base_url}/storage/images/${doctor.pic}`"
+                                    alt="Immagine del dottore" class="img-fluid" @error="handleImageError" />
+                                <img v-else
+                                    src="https://i.pinimg.com/736x/ac/67/4d/ac674d2be5f98abf1c189c75de834155.jpg"
+                                    alt="Immagine del dottore" class="img-fluid" />
+                                <p v-if="doctor.sponsorships[0]?.name == 'Gold'"
+                                    class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor premium p-2 rounded-pill text-dark">
+                                    Sponsorizzato
+                                </p>
 
-                                        <p v-if="doctor.sponsorships[0]?.name == 'Premium'"
-                                            class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor premium p-2 rounded-pill text-dark">
-                                            Sponsorizzato
-                                        </p>
+                                <p v-if="doctor.sponsorships[0]?.name == 'Premium'"
+                                    class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor premium p-2 rounded-pill text-dark">
+                                    Sponsorizzato
+                                </p>
 
-                                        <p v-if="doctor.sponsorships[0]?.name == 'Basic'"
-                                            class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor premium p-2 rounded-pill text-light text-dark">
-                                            Sponsorizzato
-                                        </p>
-                                    </div>
+                                <p v-if="doctor.sponsorships[0]?.name == 'Basic'"
+                                    class="d-flex align-items-center m-0 p-0 text-center position-absolute top-25 end-0 sponsor premium p-2 rounded-pill text-light text-dark">
+                                    Sponsorizzato
+                                </p>
+                            </div>
 
-                                    <div class="d-flex justify-content-between">
-                                        <h2>{{ doctor.surname || 'Nome non disponibile' }}</h2>
-                                    </div>
-                                    <p>Indirizzo: {{ doctor.address || 'Indirizzo non disponibile' }}</p>
-                                    <p>Telefono: {{ doctor.phone || 'Telefono non disponibile' }}</p>
-                                    <p>Bio: {{ doctor.bio || 'Bio non disponibile' }}</p>
+                            <div class="d-flex justify-content-between">
+                                <h2>{{ doctor.surname || 'Nome non disponibile' }}</h2>
+                            </div>
+                            <p>Indirizzo: {{ doctor.address || 'Indirizzo non disponibile' }}</p>
+                            <p>Telefono: {{ doctor.phone || 'Telefono non disponibile' }}</p>
+                            <p>Bio: {{ doctor.bio || 'Bio non disponibile' }}</p>
 
-                                    <!-- Recensioni -->
-                                    <div class="review-stars">
+                            <!-- Recensioni -->
+
+                            <div v-if="doctor.reviews && doctor.reviews.length > 0">
+                                <!-- Ciclo per visualizzare le stelle -->
+                                <span v-for="n in doctor.reviews[0].stars" :key="n">
+                                    <i class="fa-solid fa-star text-warning"></i>
+                                </span>
+                                <!-- Mostra il numero di stelle -->
+                                <!-- {{ doctor.reviews[0].stars }} -->
+                            </div>
+                            <div v-else>
+                                Nessuna recensione disponibile
+                            </div>
+                            <!-- <div class="review-stars">
                                         <h3>Valutazione Media:</h3>
                                         <div v-if="doctor.reviews[0].stars">
                                             <span v-for="stella in doctor.reviews[0].stars"> <i
@@ -198,8 +208,10 @@
                                         <div v-else>
                                             <p>Nessuna recensione disponibile</p>
                                         </div>
+                                    
+                                    </div> -->
 
-                                        <!-- <div v-if="doctor.reviews_avg_stars !== undefined && doctor.reviews_avg_stars !== null">
+                            <!-- <div v-if="doctor.reviews_avg_stars !== undefined && doctor.reviews_avg_stars !== null">
                                     <div>
                                         <i class="fa-solid fa-star" v-for="i in 5"
                                             :class="{ 'opacity-100': getRating(doctor.reviews_avg_stars) >= i - 1, 'opacity-50': getRating(doctor.reviews_avg_stars) < i - 1 }"></i>
@@ -207,30 +219,30 @@
                                     <p>{{ parseFloat(doctor.reviews_avg_stars).toFixed(1) }} su 5</p>
                                 </div> -->
 
-                                    </div>
 
-                                    <!-- Specializzazioni -->
-                                    <h3 v-if="doctor.specializations && doctor.specializations.length > 0">
-                                        Specializzazioni:
-                                    </h3>
-                                    <ul v-if="doctor.specializations && doctor.specializations.length > 0">
-                                        <li v-for="specialization in doctor.specializations" :key="specialization.id">
-                                            {{ specialization.name }}
-                                        </li>
-                                    </ul>
-                                    <div v-else>
-                                        <h3>Specializzazioni:</h3>
-                                        <p>Nessuna specializzazione</p>
-                                    </div>
-                                    <button class="btn btn-info mt-2" @click="goToDoctorDetail(doctor.slug)">
-                                        Visualizza Dettagli
-                                    </button>
-                                </div>
+
+                            <!-- Specializzazioni -->
+                            <h3 v-if="doctor.specializations && doctor.specializations.length > 0">
+                                Specializzazioni:
+                            </h3>
+                            <ul v-if="doctor.specializations && doctor.specializations.length > 0">
+                                <li v-for="specialization in doctor.specializations" :key="specialization.id">
+                                    {{ specialization.name }}
+                                </li>
+                            </ul>
+                            <div v-else>
+                                <h3>Specializzazioni:</h3>
+                                <p>Nessuna specializzazione</p>
                             </div>
+                            <button class="btn btn-info mt-2" @click="goToDoctorDetail(doctor.slug)">
+                                Visualizza Dettagli
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 </template>
 
 <script>

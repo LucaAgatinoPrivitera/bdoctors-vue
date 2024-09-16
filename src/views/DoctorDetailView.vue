@@ -150,7 +150,11 @@ export default {
                 <h3 class="reviews-title text-info">Recensioni:</h3>
                 <ul v-if="doctor.reviews && doctor.reviews.length > 0" class="reviews-list list-unstyled">
                     <li v-for="review in doctor.reviews" :key="review.id" class="review-item mb-3">
-                        <strong>{{ review.name_reviewer }} - {{ review.stars }} stelle</strong>
+                        <strong>{{ review.name_reviewer }} -
+                            <span v-for="n in review.stars" :key="n">
+                                <i class="fa-solid fa-star text-warning"></i>
+                            </span>
+                        </strong>
                         <p>{{ review.review_text }}</p>
                     </li>
                 </ul>
@@ -218,10 +222,10 @@ export default {
         </div>
         <router-link class="back-home btn btn-outline-light mt-3" to="/">Torna alla home</router-link>
         <v-snackbar v-model="snackbar" :timeout="3000" class="custom-snackbar">
-        {{ snackbarText }}
-    </v-snackbar>
+            {{ snackbarText }}
+        </v-snackbar>
     </div>
-    
+
 
 </template>
 
@@ -323,7 +327,7 @@ h3 {
     font-weight: bold;
     /* Rende il testo più evidente */
     border-radius: 5px;
-    
+
 }
 
 
