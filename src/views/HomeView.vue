@@ -107,15 +107,25 @@
                             </ul>
 
                             <!-- Visualizza i cerchi colorati per le stelle -->
-                            <h3>Valutazione Media:</h3>
-                            <p>{{ doctor.reviews.stars }}</p>
-                            <div class="stars">
-                                <span v-for="index in 5" :key="index" class="star-circle"
-                                    :class="getStarClass(index, doctor.reviews.avg_stars)">
-                                </span>
+                            <div class="review-stars">
+                                <h3>Valutazione Media:</h3>
+                                <div v-if="doctor.reviews[0].stars">
+                                    <span v-for="stella in doctor.reviews[0].stars"> <i
+                                            class="fa-solid fa-star"></i></span>
+                                </div>
+                                <div v-else>
+                                    <p>Nessuna recensione disponibile</p>
+                                </div>
+
+                                <!-- <div v-if="doctor.reviews_avg_stars !== undefined && doctor.reviews_avg_stars !== null">
+                                    <div>
+                                        <i class="fa-solid fa-star" v-for="i in 5"
+                                            :class="{ 'opacity-100': getRating(doctor.reviews_avg_stars) >= i - 1, 'opacity-50': getRating(doctor.reviews_avg_stars) < i - 1 }"></i>
+                                    </div>
+                                    <p>{{ parseFloat(doctor.reviews_avg_stars).toFixed(1) }} su 5</p>
+                                </div> -->
+
                             </div>
-                            <p>{{ doctor.reviews_avg_stars !== null ? parseFloat(doctor.reviews_avg_stars).toFixed(1) : 'Nessuna recensione' }}
-                                su 5</p>
 
                             <button class="btn btn-info mt-2" @click="goToDoctorDetail(doctor.slug)">
                                 Visualizza Dettagli

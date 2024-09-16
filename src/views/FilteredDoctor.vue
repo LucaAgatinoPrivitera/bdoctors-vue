@@ -127,16 +127,22 @@
                             <!-- Recensioni -->
                             <div class="review-stars">
                                 <h3>Valutazione Media:</h3>
-                                <div v-if="doctor.reviews_avg_stars !== undefined && doctor.reviews_avg_stars !== null">
+                                <div v-if="doctor.reviews[0].stars">
+                                    <span v-for="stella in doctor.reviews[0].stars"> <i
+                                            class="fa-solid fa-star"></i></span>
+                                </div>
+                                <div v-else>
+                                    <p>Nessuna recensione disponibile</p>
+                                </div>
+
+                                <!-- <div v-if="doctor.reviews_avg_stars !== undefined && doctor.reviews_avg_stars !== null">
                                     <div>
                                         <i class="fa-solid fa-star" v-for="i in 5"
                                             :class="{ 'opacity-100': getRating(doctor.reviews_avg_stars) >= i - 1, 'opacity-50': getRating(doctor.reviews_avg_stars) < i - 1 }"></i>
                                     </div>
                                     <p>{{ parseFloat(doctor.reviews_avg_stars).toFixed(1) }} su 5</p>
-                                </div>
-                                <div v-else>
-                                    <p>Nessuna recensione disponibile</p>
-                                </div>
+                                </div> -->
+
                             </div>
 
                             <!-- Specializzazioni -->
@@ -148,6 +154,10 @@
                                     {{ specialization.name }}
                                 </li>
                             </ul>
+                            <div v-else>
+                                <h3>Specializzazioni:</h3>
+                                <p>Nessuna specializzazione</p>
+                            </div>
                             <button class="btn btn-info mt-2" @click="goToDoctorDetail(doctor.slug)">
                                 Visualizza Dettagli
                             </button>
@@ -162,7 +172,7 @@
 <script>
 import axios from 'axios';
 
- export default {
+export default {
     data() {
         return {
             doctors: [],
