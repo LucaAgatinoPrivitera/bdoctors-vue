@@ -15,7 +15,7 @@ L'utente può vedere chi è sponsorizzato grazie a un badge nella card.
 Verranno mostrati all'utente i relativi dati del dottore, ovvero: Nome e cognome, immagine, indirizzo, numero di telefono, bio, le specializzazioni e le recensioni che ha ricevuto. Inoltre saranno presenti i pulsanti per mandare un messaggio al dottore e per creare una recensione.
 
 # Progettazione #
-Il sito è stato realizzato utilizzando Vue.js.
+Il sito è stato realizzato utilizzando Vue.js, e Bootstrap insieme al CSS plain per realizzare lo stile del sito.
 Il sito si aggancia alle API realizzate nella parte di Back-office.
 I form presenti nella part di Front-office sono validati.
 Per la visualizzazione del profilo è stato utilizzato una slug, al posto dell'id.
